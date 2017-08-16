@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>NW.js React App</title>
+  </head>
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root"></div>
+    <script>
+      if (typeof process !== 'undefined' && process.env.NODE_ENV === 'development') {
+        const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
+        const host = process.env.HOST || '0.0.0.0';
+        const port = parseInt(process.env.PORT, 10) || 3000;
+        document.write('<script src="' + protocol + '://' + host + ':' + port + '/static/js/bundle.js"><\/script>');
+      }
+    </script>
+  </body>
+</html>

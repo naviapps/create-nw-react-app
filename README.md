@@ -52,11 +52,11 @@ my-app
 ├── README.md
 ├── node_modules
 ├── package.json
+├── index.html
 ├── .gitignore
 ├── .npmrc
 ├── public
 │   └── favicon.ico
-│   └── index.html
 └── src
     └── App.css
     └── App.js

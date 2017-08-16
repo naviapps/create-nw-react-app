@@ -4,7 +4,17 @@ root = true
 end_of_line = lf
 insert_final_newline = true
 
-[*.js]
+[*.{js,json}]
+charset = utf-8
+indent_style = space
+indent_size = 2
+
+[*.css]
+charset = utf-8
+indent_style = space
+indent_size = 2
+
+[*.html]
 charset = utf-8
 indent_style = space
 indent_size = 2
