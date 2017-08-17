@@ -13,7 +13,11 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const NwBuilderWebpackPlugin = require('nw-builder-webpack-plugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
-const nwPackageJson = require(path.join(paths.appNodeModules, 'nw', 'package.json'));
+const nwPackageJson = require(path.join(
+  paths.appNodeModules,
+  'nw',
+  'package.json'
+));
 
 const publicPath = '/';
 const shouldUseRelativeAssetPaths = publicPath === './';
@@ -25,12 +29,13 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
   throw new Error('Production builds must have NODE_ENV=production.');
 }
 
-const babelLoaderOptions = process.env.REACT_APP_BABELRC === 'false'
-  ? {
-      babelrc: false,
-      presets: [require.resolve('babel-preset-react-app')],
-    }
-  : {};
+const babelLoaderOptions =
+  process.env.REACT_APP_BABELRC === 'false'
+    ? {
+        babelrc: false,
+        presets: [require.resolve('babel-preset-react-app')],
+      }
+    : {};
 
 const cssFilename = 'static/css/[name].[contenthash:8].css';
 
@@ -62,9 +67,7 @@ module.exports = {
         require.resolve('babel-runtime/package.json')
       ),
     },
-    plugins: [
-      new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
-    ],
+    plugins: [new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson])],
   },
   module: {
     strictExportPresence: true,
@@ -102,10 +105,7 @@ module.exports = {
             test: /\.(js|jsx)$/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
-            options: Object.assign(
-              { compact: true },
-              babelLoaderOptions
-            ),
+            options: Object.assign({ compact: true }, babelLoaderOptions),
           },
           {
             test: /\.css$/,
@@ -210,9 +210,7 @@ module.exports = {
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new CopyWebpackPlugin([
-      { from: paths.appPackageJson },
-    ]),
+    new CopyWebpackPlugin([{ from: paths.appPackageJson }]),
     new NwBuilderWebpackPlugin({
       buildDir: paths.appBuild,
       platforms: ['osx64', 'win32', 'win64'],

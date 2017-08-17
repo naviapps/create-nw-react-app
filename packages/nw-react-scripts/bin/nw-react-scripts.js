@@ -15,7 +15,10 @@ program
   .description('Runs the app in development mode.')
   .option('--babelrc', 'Whether or not to look up .babelrc files')
   .option('--webpack <path>', 'Path to the webpack config file')
-  .option('--webpack-dev-server <path>', 'Path to the webpack Dev Server config file')
+  .option(
+    '--webpack-dev-server <path>',
+    'Path to the webpack Dev Server config file'
+  )
   .action(options => {
     process.env.BABEL_ENV = 'development';
     process.env.NODE_ENV = 'development';
@@ -35,7 +38,11 @@ program
   .command('build')
   .description('Builds the app for production to the build folder.')
   .option('--babelrc', 'Whether or not to look up .babelrc files')
-  .option('--webpack <path>', 'Path to the webpack config file', require.resolve('../config/webpack.config.prod'))
+  .option(
+    '--webpack <path>',
+    'Path to the webpack config file',
+    require.resolve('../config/webpack.config.prod')
+  )
   .action(options => {
     process.env.BABEL_ENV = 'production';
     process.env.NODE_ENV = 'production';

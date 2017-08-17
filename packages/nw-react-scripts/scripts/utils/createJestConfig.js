@@ -51,16 +51,16 @@ module.exports = (resolve, rootDir, isEjecting) => {
       console.error(
         chalk.red(
           'Out of the box, Create NW.js React App only supports overriding ' +
-          'these Jest options:\n\n' +
-          supportedKeys.map(key => chalk.bold('  \u2022 ' + key)).join('\n') +
-          '.\n\n' +
-          'These options in your package.json Jest configuration ' +
-          'are not currently supported by Create NW.js React App:\n\n' +
-          unsupportedKeys
-            .map(key => chalk.bold('  \u2022 ' + key))
-            .join('\n') +
-          'You may also file an issue with Create NW.js React App to discuss ' +
-          'supporting more options out of the box.\n'
+            'these Jest options:\n\n' +
+            supportedKeys.map(key => chalk.bold('  \u2022 ' + key)).join('\n') +
+            '.\n\n' +
+            'These options in your package.json Jest configuration ' +
+            'are not currently supported by Create NW.js React App:\n\n' +
+            unsupportedKeys
+              .map(key => chalk.bold('  \u2022 ' + key))
+              .join('\n') +
+            'You may also file an issue with Create NW.js React App to discuss ' +
+            'supporting more options out of the box.\n'
         )
       );
       process.exit(1);

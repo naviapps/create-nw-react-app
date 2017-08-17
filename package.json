@@ -1,15 +1,33 @@
 {
-  "name": "create-nw-react-scripts",
+  "name": "create-nw-react-app",
   "main": "packages/nw-react-scripts/template/index.html",
   "scripts": {
     "build": "node packages/nw-react-scripts/bin/nw-react-scripts.js build",
+    "changelog": "lerna-changelog",
     "create-nw-react-app": "tasks/cnra.sh",
+    "postinstall": "node bootstrap.js",
+    "publish": "lerna publish --independent",
     "start": "node packages/nw-react-scripts/bin/nw-react-scripts.js start",
-    "test": "node packages/nw-react-scripts/bin/nw-react-scripts.js test --env=jsdom"
+    "test": "node packages/nw-react-scripts/bin/nw-react-scripts.js test --env=jsdom",
+    "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
+    "precommit": "lint-staged"
   },
   "devDependencies": {
     "eslint": "^4.4.1",
-    "lerna": "^2.0.0"
+    "husky": "^0.14.3",
+    "lerna": "^2.0.0",
+    "lerna-changelog": "^0.6.0",
+    "lint-staged": "^4.0.3",
+    "prettier": "^1.5.3"
   },
-  "private": true
+  "private": true,
+  "lint-staged": {
+    "*.js": [
+      "prettier --trailing-comma es5 --single-quote --write",
+      "git add"
+    ],
+    "package-lock.json": [
+      "git rm --cached"
+    ]
+  }
 }

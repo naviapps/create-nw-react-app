@@ -18,12 +18,13 @@ const publicPath = `${protocol}://${host}:${port}/`;
 const publicUrl = '';
 const env = getClientEnvironment(publicUrl);
 
-const babelLoaderOptions = process.env.REACT_APP_BABELRC === 'false'
-  ? {
-      babelrc: false,
-      presets: [require.resolve('babel-preset-react-app')],
-    }
-  : {};
+const babelLoaderOptions =
+  process.env.REACT_APP_BABELRC === 'false'
+    ? {
+        babelrc: false,
+        presets: [require.resolve('babel-preset-react-app')],
+      }
+    : {};
 
 module.exports = {
   devtool: 'cheap-module-source-map',
@@ -53,9 +54,7 @@ module.exports = {
         require.resolve('babel-runtime/package.json')
       ),
     },
-    plugins: [
-      new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
-    ],
+    plugins: [new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson])],
   },
   module: {
     strictExportPresence: true,

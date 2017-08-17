@@ -29,7 +29,7 @@ const reactScriptsLinked =
 
 if (
   !reactScriptsLinked &&
-  __dirname.indexOf(path.join('node_modules', 'nw-react-scripts', 'config')) === -1
+  __dirname.indexOf(path.join('node_modules', 'nw-react-scripts')) === -1
 ) {
   module.exports = {
     dotenv: resolveOwn('template/.env'),

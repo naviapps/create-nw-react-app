@@ -1,5 +1,13 @@
 # Create NW.js React App
 
+Create NW.js React apps with no build configuration.
+
+* [Getting Started](#getting-started) – How to create a new app.
+* [User Guide](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md) – How to develop apps bootstrapped with Create NW.js React App.
+
+Create NW.js React App works on macOS, Windows, and Linux.<br>
+If something doesn’t work please [file an issue](https://github.com/naviapps/create-nw-react-app/issues/new).
+
 ## Quick Overview
 
 ```sh
@@ -24,7 +32,7 @@ Just create a project, and you’re good to go.
 
 ### Installation
 
-Install it once globally
+Install it once globally:
 
 ```sh
 npm install -g create-nw-react-app
@@ -45,7 +53,6 @@ cd my-app
 
 It will create a directory called `my-app` inside the current folder.<br>
 Inside that directory, it will generate the initial project structure and install the transitive dependencies:
-
 
 ```
 my-app
@@ -82,14 +89,13 @@ You will see the build errors and lint warnings in the console.
 Runs the test watcher in an interactive mode.<br>
 By default, runs tests related to files changed since the last commit.
 
-[Read more about testing.](#)
+[Read more about testing.](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md#running-tests)
 
 ### `npm run build`
 
 Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br>
-By default, it also [includes a service worker](#) so that your app loads from local cache on future visits.
+The build is minified and the filenames include the hashes.
 
 Your app is ready to be released.

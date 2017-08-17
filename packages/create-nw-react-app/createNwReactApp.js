@@ -71,7 +71,9 @@ if (typeof projectName === 'undefined') {
   );
   console.log();
   console.log('For example:');
-  console.log(`  ${chalk.cyan(program.name())} ${chalk.green('my-nw-react-app')}`);
+  console.log(
+    `  ${chalk.cyan(program.name())} ${chalk.green('my-nw-react-app')}`
+  );
   console.log();
   console.log(
     `Run ${chalk.cyan(`${program.name()} --help`)} to see all options.`
@@ -91,7 +93,7 @@ const hiddenProgram = new commander.Command()
   .option(
     '--internal-testing-template <path-to-template>',
     '(internal usage only, DO NOT RELY ON THIS) ' +
-    'use a non-standard application template'
+      'use a non-standard application template'
   )
   .parse(process.argv);
 
@@ -120,7 +122,7 @@ function createApp(name, verbose, version, template) {
         console.log(
           chalk.yellow(
             `You are using npm ${npmInfo.npmVersion} so the project will be boostrapped with an old unsupported version of tools.\n\n` +
-            `Please update to npm 3 or higher for a better, fully supported experience.\n`
+              `Please update to npm 3 or higher for a better, fully supported experience.\n`
           )
         );
       }
@@ -417,8 +419,8 @@ function checkNodeVersion(packageName) {
     console.error(
       chalk.red(
         'You are running Node %s.\n' +
-        'Create NW.js React App requires Node %s or higher. \n' +
-        'Please update your version of Node.'
+          'Create NW.js React App requires Node %s or higher. \n' +
+          'Please update your version of Node.'
       ),
       process.version,
       packageJson.engines.node
@@ -448,10 +450,10 @@ function checkAppName(appName) {
         `We cannot create a project called ${chalk.green(
           appName
         )} because a dependency with the same name exists.\n` +
-        `Due to the way npm works, the following names are not allowed:\n\n`
+          `Due to the way npm works, the following names are not allowed:\n\n`
       ) +
-      chalk.cyan(dependencies.map(depName => `  ${depName}`).join('\n')) +
-      chalk.red('\n\nPlease choose a different project name.')
+        chalk.cyan(dependencies.map(depName => `  ${depName}`).join('\n')) +
+        chalk.red('\n\nPlease choose a different project name.')
     );
     process.exit(1);
   }
