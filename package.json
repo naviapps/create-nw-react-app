@@ -3,6 +3,7 @@
   "main": "packages/nw-react-scripts/template/index.html",
   "scripts": {
     "build": "node packages/nw-react-scripts/bin/nw-react-scripts.js build",
+    "create-nw-react-app": "tasks/cnra.sh",
     "start": "node packages/nw-react-scripts/bin/nw-react-scripts.js start",
     "test": "node packages/nw-react-scripts/bin/nw-react-scripts.js test --env=jsdom"
   },

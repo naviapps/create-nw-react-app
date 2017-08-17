@@ -1,0 +1,4 @@
+node_modules/
+build
+my-app*
+packages/nw-react-scripts/template

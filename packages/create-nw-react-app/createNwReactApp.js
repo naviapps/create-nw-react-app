@@ -8,6 +8,11 @@ const path = require('path');
 const execSync = require('child_process').execSync;
 const spawn = require('cross-spawn');
 const semver = require('semver');
+const dns = require('dns');
+const tmp = require('tmp');
+const unpack = require('tar-pack').unpack;
+const url = require('url');
+const hyperquest = require('hyperquest');
 
 const packageJson = require('./package.json');
 
@@ -21,9 +26,31 @@ const program = new commander.Command(packageJson.name)
     projectName = name;
   })
   .option('--verbose', 'print additional logs')
+  .option(
+    '--scripts-version <alternative-package>',
+    'use a non-standard version of nw-react-scripts'
+  )
   .allowUnknownOption()
   .on('--help', () => {
     console.log(`    Only ${chalk.green('<project-directory>')} is required.`);
+    console.log();
+    console.log(
+      `    A custom ${chalk.cyan('--scripts-version')} can be one of:`
+    );
+    console.log(`      - a specific npm version: ${chalk.green('0.8.2')}`);
+    console.log(
+      `      - a custom fork published on npm: ${chalk.green(
+        'my-nw-react-scripts'
+      )}`
+    );
+    console.log(
+      `      - a .tgz archive: ${chalk.green(
+        'https://mysite.com/my-nw-react-scripts-0.8.2.tgz'
+      )}`
+    );
+    console.log(
+      `    It is not needed unless you specifically want to use a fork.`
+    );
     console.log();
     console.log(
       `    If you have any problems, do not hesitate to file an issue:`
@@ -71,10 +98,11 @@ const hiddenProgram = new commander.Command()
 createApp(
   projectName,
   program.verbose,
+  program.scriptsVersion,
   hiddenProgram.internalTestingTemplate
 );
 
-function createApp(name, verbose, template) {
+function createApp(name, verbose, version, template) {
   const root = path.resolve(name);
   const appName = path.basename(root);
 
@@ -84,27 +112,20 @@ function createApp(name, verbose, template) {
     process.exit(1);
   }
 
-  if (!semver.satisfies(process.version, '>=6.0.0')) {
-    console.log(
-      chalk.yellow(
-        `You are using Node ${process.version} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-        `Please update to Node 6 or higher for a better, fully supported experience.\n`
-      )
-    );
-    process.exit(1);
-  }
-
-  const npmInfo = checkNpmVersion();
-  if (!npmInfo.hasMinNpm) {
-    if (npmInfo.npmVersion) {
-      console.log(
-        chalk.yellow(
-          `You are using npm ${npmInfo.npmVersion} so the project will be boostrapped with an old unsupported version of tools.\n\n` +
-          `Please update to npm 3 or higher for a better, fully supported experience.\n`
-        )
-      );
+  const useYarn = false;
+  if (!useYarn) {
+    const npmInfo = checkNpmVersion();
+    if (!npmInfo.hasMinNpm) {
+      if (npmInfo.npmVersion) {
+        console.log(
+          chalk.yellow(
+            `You are using npm ${npmInfo.npmVersion} so the project will be boostrapped with an old unsupported version of tools.\n\n` +
+            `Please update to npm 3 or higher for a better, fully supported experience.\n`
+          )
+        );
+      }
+      process.exit(1);
     }
-    process.exit(1);
   }
 
   console.log(`Creating a new NW.js React app in ${chalk.green(root)}.`);
@@ -122,19 +143,36 @@ function createApp(name, verbose, template) {
   const originalDirectory = process.cwd();
   process.chdir(root);
 
-  run(root, appName, verbose, originalDirectory, template);
+  run(root, appName, version, verbose, originalDirectory, template, useYarn);
 }
 
-function install(dependencies, verbose) {
+function install(useYarn, dependencies, verbose, isOnline) {
   return new Promise((resolve, reject) => {
-    const command = 'npm';
-    const args = [
-      'install',
-      '--save',
-      '--save-exact',
-      '--loglevel',
-      'error',
-    ].concat(dependencies);
+    let command;
+    let args;
+    if (useYarn) {
+      command = 'yarnpkg';
+      args = ['add', '--exact'];
+      if (!isOnline) {
+        args.push('--offline');
+      }
+      [].push.apply(args, dependencies);
+
+      if (!isOnline) {
+        console.log(chalk.yellow('You appear to be offline.'));
+        console.log(chalk.yellow('Falling back to the local Yarn cache.'));
+        console.log();
+      }
+    } else {
+      command = 'npm';
+      args = [
+        'install',
+        '--save',
+        '--save-exact',
+        '--loglevel',
+        'error',
+      ].concat(dependencies);
+    }
 
     if (verbose) {
       args.push('--verbose');
@@ -156,24 +194,37 @@ function install(dependencies, verbose) {
 function run(
   root,
   appName,
+  version,
   verbose,
   originalDirectory,
-  template
+  template,
+  useYarn
 ) {
-  const packageName = 'nw-react-scripts';
-  const allDependencies = ['react', 'react-dom', packageName];
+  const packageToInstall = getInstallPackage(version);
+  const allDependencies = ['react', 'react-dom', packageToInstall];
 
   console.log('Installing packages. This might take a couple of minutes.');
-  console.log(
-    `Installing ${chalk.cyan('react')}, ${chalk.cyan(
-      'react-dom'
-    )}, and ${chalk.cyan(packageName)}...`
-  );
-  console.log();
+  getPackageName(packageToInstall)
+    .then(packageName =>
+      checkIfOnline(useYarn).then(isOnline => ({
+        isOnline: isOnline,
+        packageName: packageName,
+      }))
+    )
+    .then(info => {
+      const isOnline = info.isOnline;
+      const packageName = info.packageName;
+      console.log(
+        `Installing ${chalk.cyan('react')}, ${chalk.cyan(
+          'react-dom'
+        )}, and ${chalk.cyan(packageName)}...`
+      );
+      console.log();
 
-  install(allDependencies, verbose).then(
-    () => packageName
-  )
+      return install(useYarn, allDependencies, verbose, isOnline).then(
+        () => packageName
+      );
+    })
     .then(packageName => {
       checkNodeVersion(packageName);
       setCaretRangeForRuntimeDeps(packageName);
@@ -199,14 +250,19 @@ function run(
       }
       console.log();
 
+      // On 'exit' we will delete these files from target directory.
       const knownGeneratedFiles = [
         'package.json',
         'npm-debug.log',
+        'yarn-error.log',
+        'yarn-debug.log',
         'node_modules',
       ];
       const currentFiles = fs.readdirSync(path.join(root));
       currentFiles.forEach(file => {
         knownGeneratedFiles.forEach(fileToMatch => {
+          // This will catch `(npm-debug|yarn-error|yarn-debug).log*` files
+          // and the rest of knownGeneratedFiles.
           if (
             (fileToMatch.match(/.log/g) && file.indexOf(fileToMatch) === 0) ||
             file === fileToMatch
@@ -218,6 +274,7 @@ function run(
       });
       const remainingFiles = fs.readdirSync(path.join(root));
       if (!remainingFiles.length) {
+        // Delete target folder if empty
         console.log(
           `Deleting ${chalk.cyan(`${appName} /`)} from ${chalk.cyan(
             path.resolve(root, '..')
@@ -229,6 +286,104 @@ function run(
       console.log('Done.');
       process.exit(1);
     });
+}
+
+function getInstallPackage(version) {
+  let packageToInstall = 'nw-react-scripts';
+  const validSemver = semver.valid(version);
+  if (validSemver) {
+    packageToInstall += `@${validSemver}`;
+  } else if (version) {
+    // for tar.gz or alternative paths
+    packageToInstall = version;
+  }
+  return packageToInstall;
+}
+
+function getTemporaryDirectory() {
+  return new Promise((resolve, reject) => {
+    // Unsafe cleanup lets us recursively delete the directory if it contains
+    // contents; by default it only allows removal if it's empty
+    tmp.dir({ unsafeCleanup: true }, (err, tmpdir, callback) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve({
+          tmpdir: tmpdir,
+          cleanup: () => {
+            try {
+              callback();
+            } catch (ignored) {
+              // Callback might throw and fail, since it's a temp directory the
+              // OS will clean it up eventually...
+            }
+          },
+        });
+      }
+    });
+  });
+}
+
+function extractStream(stream, dest) {
+  return new Promise((resolve, reject) => {
+    stream.pipe(
+      unpack(dest, err => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(dest);
+        }
+      })
+    );
+  });
+}
+
+// Extract package name from tarball url or path.
+function getPackageName(installPackage) {
+  if (installPackage.indexOf('.tgz') > -1) {
+    return getTemporaryDirectory()
+      .then(obj => {
+        let stream;
+        if (/^http/.test(installPackage)) {
+          stream = hyperquest(installPackage);
+        } else {
+          stream = fs.createReadStream(installPackage);
+        }
+        return extractStream(stream, obj.tmpdir).then(() => obj);
+      })
+      .then(obj => {
+        const packageName = require(path.join(obj.tmpdir, 'package.json')).name;
+        obj.cleanup();
+        return packageName;
+      })
+      .catch(err => {
+        // The package name could be with or without semver version, e.g. nw-react-scripts-0.2.0-alpha.1.tgz
+        // However, this function returns package name only without semver version.
+        console.log(
+          `Could not extract the package name from the archive: ${err.message}`
+        );
+        const assumedProjectName = installPackage.match(
+          /^.+\/(.+?)(?:-\d+.+)?\.tgz$/
+        )[1];
+        console.log(
+          `Based on the filename, assuming it is "${chalk.cyan(
+            assumedProjectName
+          )}"`
+        );
+        return Promise.resolve(assumedProjectName);
+      });
+  } else if (installPackage.indexOf('git+') === 0) {
+    // Pull package name out of git urls e.g:
+    // git+https://github.com/mycompany/nw-react-scripts.git
+    // git+ssh://github.com/mycompany/nw-react-scripts.git#v1.2.3
+    return Promise.resolve(installPackage.match(/([^/]+)\.git(#.*)?$/)[1]);
+  } else if (installPackage.match(/.+@/)) {
+    // Do not match @scope/ when stripping off @version or @tag
+    return Promise.resolve(
+      installPackage.charAt(0) + installPackage.substr(1).split('@')[0]
+    );
+  }
+  return Promise.resolve(installPackage);
 }
 
 function checkNpmVersion() {
@@ -262,7 +417,7 @@ function checkNodeVersion(packageName) {
     console.error(
       chalk.red(
         'You are running Node %s.\n' +
-        'Create React App requires Node %s or higher. \n' +
+        'Create NW.js React App requires Node %s or higher. \n' +
         'Please update your version of Node.'
       ),
       process.version,
@@ -285,6 +440,7 @@ function checkAppName(appName) {
     process.exit(1);
   }
 
+  // TODO: there should be a single place that holds the dependencies
   const dependencies = ['react', 'react-dom', 'nw-react-scripts'].sort();
   if (dependencies.indexOf(appName) >= 0) {
     console.error(
@@ -380,4 +536,26 @@ function isSafeToCreateProjectIn(root, name) {
   );
 
   return false;
+}
+
+function checkIfOnline(useYarn) {
+  if (!useYarn) {
+    // Don't ping the Yarn registry.
+    // We'll just assume the best case.
+    return Promise.resolve(true);
+  }
+
+  return new Promise(resolve => {
+    dns.lookup('registry.yarnpkg.com', err => {
+      if (err !== null && process.env.https_proxy) {
+        // If a proxy is defined, we likely can't resolve external hostnames.
+        // Try to resolve the proxy name as an indication of a connection.
+        dns.lookup(url.parse(process.env.https_proxy).hostname, proxyErr => {
+          resolve(proxyErr === null);
+        });
+      } else {
+        resolve(err === null);
+      }
+    });
+  });
 }

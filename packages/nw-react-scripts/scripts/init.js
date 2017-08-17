@@ -1,5 +1,8 @@
 'use strict';
 
+// Makes the script crash on unhandled rejections instead of silently
+// ignoring them. In the future, promise rejections that are not handled will
+// terminate the Node.js process with a non-zero exit code.
 process.on('unhandledRejection', err => {
   throw err;
 });
@@ -20,13 +23,16 @@ module.exports = function(
     .name;
   const ownPath = path.join(appPath, 'node_modules', ownPackageName);
   const appPackage = require(path.join(appPath, 'package.json'));
+  const useYarn = false;
 
+  // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
 
+  // Setup the script rules
   appPackage.scripts = {
     start: 'nw-react-scripts start',
     build: 'nw-react-scripts build',
-    test: 'nw-react-scripts test',
+    test: 'nw-react-scripts test --env=jsdom',
   };
 
   appPackage.main = 'index.html';
@@ -44,6 +50,7 @@ module.exports = function(
     );
   }
 
+  // Copy the files for the user
   const templatePath = template
     ? path.resolve(originalDirectory, template)
     : path.join(ownPath, 'template');
@@ -58,12 +65,15 @@ module.exports = function(
     return;
   }
 
+  // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
+  // See: https://github.com/npm/npm/issues/1862
   fs.move(
     path.join(appPath, 'gitignore'),
     path.join(appPath, '.gitignore'),
     [],
     err => {
       if (err) {
+        // Append if there's already a `.gitignore` file there
         if (err.code === 'EEXIST') {
           const data = fs.readFileSync(path.join(appPath, 'gitignore'));
           fs.appendFileSync(path.join(appPath, '.gitignore'), data);
@@ -92,10 +102,19 @@ module.exports = function(
     }
   );
 
-  const command = 'npm';
-  let args = ['install', '--save', verbose && '--verbose'].filter(e => e);
+  let command;
+  let args;
+
+  if (useYarn) {
+    command = 'yarnpkg';
+    args = ['add'];
+  } else {
+    command = 'npm';
+    args = ['install', '--save', verbose && '--verbose'].filter(e => e);
+  }
   args.push('react', 'react-dom');
 
+  // Install additional template dependencies, if present
   const templateDependenciesPath = path.join(
     appPath,
     '.template.dependencies.json'
@@ -110,6 +129,9 @@ module.exports = function(
     fs.unlinkSync(templateDependenciesPath);
   }
 
+  // Install react and react-dom for backward compatibility with old CRA cli
+  // which doesn't install react and react-dom along with nw-react-scripts
+  // or template is presetend (via --internal-testing-template)
   if (!isReactInstalled(appPackage) || template) {
     console.log(`Installing react and react-dom using ${command}...`);
     console.log();
@@ -121,6 +143,9 @@ module.exports = function(
     }
   }
 
+  // Display the most elegant way to cd.
+  // This needs to handle an undefined originalDirectory for
+  // backward compatibility with old global-cli's.
   let cdpath;
   if (originalDirectory && path.join(originalDirectory, appName) === appPath) {
     cdpath = appName;
@@ -128,25 +153,28 @@ module.exports = function(
     cdpath = appPath;
   }
 
+  // Change displayed command to yarn instead of yarnpkg
+  const displayedCommand = useYarn ? 'yarn' : 'npm';
+
   console.log();
   console.log(`Success! Created ${appName} at ${appPath}`);
   console.log('Inside that directory, you can run several commands:');
   console.log();
-  console.log(chalk.cyan(`  npm start`));
+  console.log(chalk.cyan(`  ${displayedCommand} start`));
   console.log('    Starts the development app.');
   console.log();
   console.log(
-    chalk.cyan(`  npm run build`)
+    chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}build`)
   );
   console.log('    Bundles the app into static files for production.');
   console.log();
-  console.log(chalk.cyan(`  npm test`));
+  console.log(chalk.cyan(`  ${displayedCommand} test`));
   console.log('    Starts the test runner.');
   console.log();
   console.log('We suggest that you begin by typing:');
   console.log();
   console.log(chalk.cyan('  cd'), cdpath);
-  console.log(`  ${chalk.cyan(`npm start`)}`);
+  console.log(`  ${chalk.cyan(`${displayedCommand} start`)}`);
   if (readmeExists) {
     console.log();
     console.log(
