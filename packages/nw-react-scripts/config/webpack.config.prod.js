@@ -214,6 +214,7 @@ module.exports = {
       { from: paths.appPackageJson },
     ]),
     new NwBuilderWebpackPlugin({
+      buildDir: paths.appBuild,
       platforms: ['osx64', 'win32', 'win64'],
       version: nwPackageJson.version,
     }),
