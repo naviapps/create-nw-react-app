@@ -1,6 +1,6 @@
 {
   "name": "nw-react-scripts",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Configuration and scripts for Create NW.js React App.",
   "keywords": [
     "nw",
@@ -9,7 +9,7 @@
     "react"
   ],
   "bugs": {
-    "url": "https://github.com/naviapps/nw-react-scripts/issues"
+    "url": "https://github.com/naviapps/create-nw-react-app/issues"
   },
   "files": [
     "bin",
@@ -20,7 +20,7 @@
   ],
   "license": "BSD-3-Clause",
   "bin": "bin/nw-react-scripts.js",
-  "repository": "naviapps/nw-react-scripts",
+  "repository": "naviapps/create-nw-react-app",
   "dependencies": {
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.25.0",

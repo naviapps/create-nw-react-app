@@ -1,6 +1,6 @@
 {
   "name": "create-nw-react-app",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Create NW.js React apps with no build configuration.",
   "keywords": [
     "nw",
