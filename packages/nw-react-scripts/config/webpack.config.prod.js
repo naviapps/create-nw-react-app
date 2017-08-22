@@ -6,7 +6,6 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -191,23 +190,6 @@ module.exports = {
     }),
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
-    }),
-    new SWPrecacheWebpackPlugin({
-      dontCacheBustUrlsMatching: /\.\w{8}\./,
-      filename: 'service-worker.js',
-      logger(message) {
-        if (message.indexOf('Total precache size is') === 0) {
-          return;
-        }
-        if (message.indexOf('Skipping static resource') === 0) {
-          return;
-        }
-        console.log(message);
-      },
-      minify: true,
-      navigateFallback: publicUrl + '/index.html',
-      navigateFallbackWhitelist: [/^(?!\/__).*/],
-      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new CopyWebpackPlugin([{ from: paths.appPackageJson }]),

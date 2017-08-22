@@ -1,5 +1,6 @@
 {
   "name": "create-nw-react-app",
+  "private": true,
   "main": "packages/nw-react-scripts/template/index.html",
   "scripts": {
     "build": "node packages/nw-react-scripts/bin/nw-react-scripts.js build",
@@ -13,14 +14,13 @@
     "precommit": "lint-staged"
   },
   "devDependencies": {
-    "eslint": "^4.4.1",
+    "eslint": "^4.5.0",
     "husky": "^0.14.3",
     "lerna": "^2.0.0",
     "lerna-changelog": "^0.6.0",
     "lint-staged": "^4.0.3",
     "prettier": "^1.5.3"
   },
-  "private": true,
   "lint-staged": {
     "*.js": [
       "prettier --trailing-comma es5 --single-quote --write",
