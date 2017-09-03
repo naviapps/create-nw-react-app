@@ -37,6 +37,15 @@ module.exports = function(
     eject: 'nw-react-scripts eject',
   };
 
+  appPackage.main = 'index.html';
+
+  appPackage.nwBuilder = {
+    platforms: ['osx64', 'win32', 'win64'],
+    version: '0.24.4',
+    buildDir: './build',
+    cacheDir: './cache',
+  };
+
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
     JSON.stringify(appPackage, null, 2)
@@ -55,10 +64,7 @@ module.exports = function(
     ? path.resolve(originalDirectory, template)
     : path.join(ownPath, 'template');
   if (fs.existsSync(templatePath)) {
-    fs.copySync(templatePath, appPath, {
-      dereference: true,
-      filter: file => file !== path.join(templatePath, 'package.json'),
-    });
+    fs.copySync(templatePath, appPath);
   } else {
     console.error(
       `Could not locate supplied template: ${chalk.green(templatePath)}`

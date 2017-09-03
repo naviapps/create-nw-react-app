@@ -1,6 +1,5 @@
 'use strict';
 
-const { spawn } = require('child_process');
 const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware');
 const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware');
 const config = require('./webpack.config.dev');
@@ -34,9 +33,6 @@ module.exports = function(proxy, allowedHost) {
     setup(app) {
       app.use(errorOverlayMiddleware());
       app.use(noopServiceWorkerMiddleware());
-      spawn(findpath(), [paths.appPath], { stdio: 'ignore' })
-        .on('close', code => process.exit(code))
-        .on('error', err => console.error(err));
     },
   };
 };

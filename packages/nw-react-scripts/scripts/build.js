@@ -16,8 +16,10 @@ const config = require('../config/webpack.config.prod');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+const NwBuilder = require('nw-builder');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
+const appPackageJson = require(paths.appPackageJson);
 
 const measureFileSizesBeforeBuild =
   FileSizeReporter.measureFileSizesBeforeBuild;
@@ -33,6 +35,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 measureFileSizesBeforeBuild(paths.appBuild)
   .then(previousFileSizes => {
     fs.emptyDirSync(paths.appBuild);
+    fs.copySync(paths.appPackageJson, `${paths.appBuild}/package.json`);
     copyPublicFolder();
     return build(previousFileSizes);
   })
@@ -65,7 +68,18 @@ measureFileSizesBeforeBuild(paths.appBuild)
       );
       console.log();
 
-      // TODO
+      const options = appPackageJson.nwBuilder;
+      options.files = `${paths.appBuild}/**/**`;
+      options.flavor = 'normal';
+      const nw = new NwBuilder(options);
+      nw
+        .build()
+        .then(() => {
+          console.log(chalk.green('Build successfully.\n'));
+        })
+        .catch(err => {
+          throw err;
+        });
     },
     err => {
       console.log(chalk.red('Failed to compile.\n'));

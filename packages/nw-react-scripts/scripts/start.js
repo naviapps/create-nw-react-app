@@ -27,14 +27,17 @@ const {
   prepareProxy,
   prepareUrls,
 } = require('react-dev-utils/WebpackDevServerUtils');
+const NwBuilder = require('nw-builder');
 const paths = require('../config/paths');
 const config = require('../config/webpack.config.dev');
 const createDevServerConfig = require('../config/webpackDevServer.config');
+const appPackageJson = require(paths.appPackageJson);
 
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 
 // Warn and crash if required files are missing
+console.log(paths.appHtml);
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
@@ -74,7 +77,19 @@ choosePort(HOST, DEFAULT_PORT)
         clearConsole();
       }
       console.log(chalk.cyan('Starting the development server...\n'));
-      // TODO
+
+      const options = appPackageJson.nwBuilder;
+      options.files = `${paths.appPath}/**/**`;
+      options.flavor = 'sdk';
+      const nw = new NwBuilder(options);
+      nw
+        .run()
+        .then(() => {
+          process.emit('SIGINT');
+        })
+        .catch(err => {
+          throw err;
+        });
     });
 
     ['SIGINT', 'SIGTERM'].forEach(function(sig) {

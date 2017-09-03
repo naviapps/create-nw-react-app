@@ -61,7 +61,6 @@ my-app
 ├── package.json
 ├── index.html
 ├── .gitignore
-├── .npmrc
 ├── public
 │   └── favicon.ico
 └── src
@@ -76,7 +75,7 @@ my-app
 No configuration or complicated folder structures, just the files you need to build your app.<br>
 Once the installation is done, you can run some commands inside the project folder:
 
-### `npm start`
+### `npm start` or `yarn start`
 
 Runs the app in development mode.<br>
 Open app and [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -84,14 +83,14 @@ Open app and [http://localhost:3000](http://localhost:3000) to view it in the br
 The page will reload if you make edits.<br>
 You will see the build errors and lint warnings in the console.
 
-### `npm test`
+### `npm test` or `yarn test`
 
 Runs the test watcher in an interactive mode.<br>
 By default, runs tests related to files changed since the last commit.
 
 [Read more about testing.](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md#running-tests)
 
-### `npm run build`
+### `npm run build` or `yarn build`
 
 Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.

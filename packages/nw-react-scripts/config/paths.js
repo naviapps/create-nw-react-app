@@ -86,7 +86,7 @@ const reactScriptsLinked =
 // config before eject: we're in ./node_modules/nw-react-scripts/config/
 if (
   !reactScriptsLinked &&
-  __dirname.indexOf(path.join('packages', 'nw-react-scripts', 'config')) === -1
+  __dirname.indexOf(path.join('packages', 'nw-react-scripts', 'config')) !== -1
 ) {
   module.exports = {
     dotenv: resolveOwn('template/.env'),
@@ -95,7 +95,7 @@ if (
     appPublic: resolveOwn('template/public'),
     appHtml: resolveOwn('template/index.html'),
     appIndexJs: resolveOwn('template/src/index.js'),
-    appPackageJson: resolveOwn('template/package.json'),
+    appPackageJson: resolveOwn('package.json'),
     appSrc: resolveOwn('template/src'),
     yarnLockFile: resolveOwn('template/yarn.lock'),
     testsSetup: resolveOwn('template/src/setupTests.js'),

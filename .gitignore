@@ -1,6 +1,7 @@
 .idea/
 .vscode/
 node_modules/
+cache
 build
 .DS_Store
 *.tgz

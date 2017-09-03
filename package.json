@@ -1,5 +1,6 @@
 {
   "name": "create-nw-react-app",
+  "version": "0.1.0",
   "main": "packages/nw-react-scripts/template/index.html",
   "scripts": {
     "build": "node packages/nw-react-scripts/scripts/build.js",
@@ -27,6 +28,9 @@
       "git add"
     ],
     "yarn.lock": [
+      "git rm --cached"
+    ],
+    "package-lock.json": [
       "git rm --cached"
     ]
   }
