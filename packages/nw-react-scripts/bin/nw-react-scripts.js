@@ -2,68 +2,51 @@
 
 'use strict';
 
-const path = require('path');
-const program = require('commander');
-const packageJson = require('../package.json');
+const spawn = require('react-dev-utils/crossSpawn');
+const args = process.argv.slice(2);
 
-program
-  .version(packageJson.version)
-  .description('Configuration and scripts for Create NW.js React App.');
+const scriptIndex = args.findIndex(
+  x => x === 'build' || x === 'eject' || x === 'start' || x === 'test'
+);
+const script = scriptIndex === -1 ? args[0] : args[scriptIndex];
+const nodeArgs = scriptIndex > 0 ? args.slice(0, scriptIndex) : [];
 
-program
-  .command('start')
-  .description('Runs the app in development mode.')
-  .option('--babelrc', 'Whether or not to look up .babelrc files')
-  .option('--webpack <path>', 'Path to the webpack config file')
-  .option(
-    '--webpack-dev-server <path>',
-    'Path to the webpack Dev Server config file'
-  )
-  .action(options => {
-    process.env.BABEL_ENV = 'development';
-    process.env.NODE_ENV = 'development';
-    process.env.HOST = 'localhost';
-    process.env.REACT_APP_BABELRC = options.babelrc === true;
-    process.env.REACT_APP_WEBPACK = options.webpack
-      ? path.resolve(options.webpack)
-      : require.resolve('../config/webpack.config.dev');
-    process.env.REACT_APP_WEBPACK_DEV_SERVER = options.webpackDevServer
-      ? path.resolve(options.webpackDevServer)
-      : require.resolve('../config/webpackDevServer.config');
-
-    require('../scripts/start');
-  });
-
-program
-  .command('build')
-  .description('Builds the app for production to the build folder.')
-  .option('--babelrc', 'Whether or not to look up .babelrc files')
-  .option(
-    '--webpack <path>',
-    'Path to the webpack config file',
-    require.resolve('../config/webpack.config.prod')
-  )
-  .action(options => {
-    process.env.BABEL_ENV = 'production';
-    process.env.NODE_ENV = 'production';
-    process.env.REACT_APP_BABELRC = options.babelrc === true;
-    process.env.REACT_APP_WEBPACK = options.webpack
-      ? path.resolve(options.webpack)
-      : require.resolve('../config/webpack.config.prod');
-
-    require('../scripts/build');
-  });
-
-program
-  .command('test')
-  .description('Runs the test watcher in an interactive mode.')
-  .allowUnknownOption(true)
-  .action(() => {
-    process.env.BABEL_ENV = 'test';
-    process.env.NODE_ENV = 'test';
-    process.env.PUBLIC_URL = '';
-
-    require('../scripts/test');
-  });
-
-program.parse(process.argv);
+switch (script) {
+  case 'build':
+  case 'eject':
+  case 'start':
+  case 'test': {
+    const result = spawn.sync(
+      'node',
+      nodeArgs
+        .concat(require.resolve('../scripts/' + script))
+        .concat(args.slice(scriptIndex + 1)),
+      { stdio: 'inherit' }
+    );
+    if (result.signal) {
+      if (result.signal === 'SIGKILL') {
+        console.log(
+          'The build failed because the process exited too early. ' +
+            'This probably means the system ran out of memory or someone called ' +
+            '`kill -9` on the process.'
+        );
+      } else if (result.signal === 'SIGTERM') {
+        console.log(
+          'The build failed because the process exited too early. ' +
+            'Someone might have called `kill` or `killall`, or the system could ' +
+            'be shutting down.'
+        );
+      }
+      process.exit(1);
+    }
+    process.exit(result.status);
+    break;
+  }
+  default:
+    console.log('Unknown script "' + script + '".');
+    console.log('Perhaps you need to update nw-react-scripts?');
+    console.log(
+      'See: https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md#updating-to-new-releases'
+    );
+    break;
+}

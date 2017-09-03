@@ -1,3 +1,4 @@
+// @remove-file-on-eject
 'use strict';
 
 // Makes the script crash on unhandled rejections instead of silently
@@ -23,7 +24,7 @@ module.exports = function(
     .name;
   const ownPath = path.join(appPath, 'node_modules', ownPackageName);
   const appPackage = require(path.join(appPath, 'package.json'));
-  const useYarn = false;
+  const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
 
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
@@ -33,9 +34,8 @@ module.exports = function(
     start: 'nw-react-scripts start',
     build: 'nw-react-scripts build',
     test: 'nw-react-scripts test --env=jsdom',
+    eject: 'nw-react-scripts eject',
   };
-
-  appPackage.main = 'index.html';
 
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
@@ -56,6 +56,7 @@ module.exports = function(
     : path.join(ownPath, 'template');
   if (fs.existsSync(templatePath)) {
     fs.copySync(templatePath, appPath, {
+      dereference: true,
       filter: file => file !== path.join(templatePath, 'package.json'),
     });
   } else {
@@ -78,23 +79,6 @@ module.exports = function(
           const data = fs.readFileSync(path.join(appPath, 'gitignore'));
           fs.appendFileSync(path.join(appPath, '.gitignore'), data);
           fs.unlinkSync(path.join(appPath, 'gitignore'));
-        } else {
-          throw err;
-        }
-      }
-    }
-  );
-
-  fs.move(
-    path.join(appPath, 'npmrc'),
-    path.join(appPath, '.npmrc'),
-    [],
-    err => {
-      if (err) {
-        if (err.code === 'EEXIST') {
-          const data = fs.readFileSync(path.join(appPath, 'npmrc'));
-          fs.appendFileSync(path.join(appPath, '.npmrc'), data);
-          fs.unlinkSync(path.join(appPath, 'npmrc'));
         } else {
           throw err;
         }
@@ -170,6 +154,16 @@ module.exports = function(
   console.log();
   console.log(chalk.cyan(`  ${displayedCommand} test`));
   console.log('    Starts the test runner.');
+  console.log();
+  console.log(
+    chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}eject`)
+  );
+  console.log(
+    '    Removes this tool and copies build dependencies, configuration files'
+  );
+  console.log(
+    '    and scripts into the app directory. If you do this, you can’t go back!'
+  );
   console.log();
   console.log('We suggest that you begin by typing:');
   console.log();

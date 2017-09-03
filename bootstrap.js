@@ -5,6 +5,15 @@ const { resolve } = require('path');
 const { existsSync } = require('fs');
 const { platform } = require('os');
 
+function shouldUseYarn() {
+  try {
+    execSync('yarnpkg --version', { stdio: 'ignore' });
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 function shouldUseNpmConcurrently() {
   try {
     const versionString = execSync('npm --version');
@@ -16,7 +25,7 @@ function shouldUseNpmConcurrently() {
   }
 }
 
-const yarn = false;
+const yarn = shouldUseYarn();
 const windows = platform() === 'win32';
 const lerna = resolve(
   __dirname,

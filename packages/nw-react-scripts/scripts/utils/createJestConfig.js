@@ -1,3 +1,4 @@
+// @remove-file-on-eject
 'use strict';
 
 const fs = require('fs');
@@ -5,10 +6,14 @@ const chalk = require('chalk');
 const paths = require('../../config/paths');
 
 module.exports = (resolve, rootDir, isEjecting) => {
+  // Use this instead of `paths.testsSetup` to avoid putting
+  // an absolute filename into configuration after ejecting.
   const setupTestsFile = fs.existsSync(paths.testsSetup)
     ? '<rootDir>/src/setupTests.js'
     : undefined;
 
+  // TODO: I don't know if it's safe or not to just use / as path separator
+  // in Jest configs. We need help from somebody with Windows to determine this.
   const config = {
     collectCoverageFrom: ['src/**/*.{js,jsx}'],
     setupFiles: [resolve('config/polyfills.js')],
@@ -59,6 +64,10 @@ module.exports = (resolve, rootDir, isEjecting) => {
             unsupportedKeys
               .map(key => chalk.bold('  \u2022 ' + key))
               .join('\n') +
+            '\n\nIf you wish to override other Jest options, you need to ' +
+            'eject from the default setup. You can do so by running ' +
+            chalk.bold('npm run eject') +
+            ' but remember that this is a one-way operation. ' +
             'You may also file an issue with Create NW.js React App to discuss ' +
             'supporting more options out of the box.\n'
         )

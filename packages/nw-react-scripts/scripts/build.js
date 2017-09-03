@@ -1,13 +1,7 @@
 'use strict';
 
-const chalk = require('chalk');
-const fs = require('fs-extra');
-const webpack = require('webpack');
-const paths = require('../config/paths');
-const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
-const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
-const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
-const printBuildError = require('react-dev-utils/printBuildError');
+process.env.BABEL_ENV = 'production';
+process.env.NODE_ENV = 'production';
 
 process.on('unhandledRejection', err => {
   throw err;
@@ -15,7 +9,15 @@ process.on('unhandledRejection', err => {
 
 require('../config/env');
 
-const config = require(process.env.REACT_APP_WEBPACK);
+const chalk = require('chalk');
+const fs = require('fs-extra');
+const webpack = require('webpack');
+const config = require('../config/webpack.config.prod');
+const paths = require('../config/paths');
+const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
+const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
+const printBuildError = require('react-dev-utils/printBuildError');
 
 const measureFileSizesBeforeBuild =
   FileSizeReporter.measureFileSizesBeforeBuild;
@@ -62,6 +64,8 @@ measureFileSizesBeforeBuild(paths.appBuild)
         WARN_AFTER_CHUNK_GZIP_SIZE
       );
       console.log();
+
+      // TODO
     },
     err => {
       console.log(chalk.red('Failed to compile.\n'));
@@ -109,8 +113,8 @@ function build(previousFileSizes) {
   });
 }
 
-const copyPublicFolder = () => {
+function copyPublicFolder() {
   fs.copySync(paths.appPublic, paths.appBuild, {
     dereference: true,
   });
-};
+}

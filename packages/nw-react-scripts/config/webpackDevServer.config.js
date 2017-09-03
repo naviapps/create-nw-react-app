@@ -1,9 +1,8 @@
 'use strict';
 
 const { spawn } = require('child_process');
-const errorOverlayMiddleware = require('react-error-overlay/middleware');
+const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware');
 const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware');
-const { findpath } = require('nw');
 const config = require('./webpack.config.dev');
 const paths = require('./paths');
 
@@ -25,7 +24,7 @@ module.exports = function(proxy, allowedHost) {
       ignored: /node_modules/,
     },
     https: protocol === 'https',
-    host,
+    host: host,
     overlay: false,
     historyApiFallback: {
       disableDotRule: true,
