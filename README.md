@@ -63,6 +63,7 @@ my-app
 ├── .gitignore
 ├── public
 │   └── favicon.ico
+│   └── manifest.json
 └── src
     └── App.css
     └── App.js
@@ -70,6 +71,7 @@ my-app
     └── index.css
     └── index.js
     └── logo.svg
+    └── registerServiceWorker.js
 ```
 
 No configuration or complicated folder structures, just the files you need to build your app.<br>
@@ -95,6 +97,13 @@ By default, runs tests related to files changed since the last commit.
 Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.
+The build is minified and the filenames include the hashes.<br>
+By default, it also [includes a service worker](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md#making-a-progressive-web-app) so that your app loads from local cache on future visits.
 
 Your app is ready to be released.
+
+## User Guide
+
+- [Folder Structure](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md#folder-structure)
+
+A copy of the user guide will be created as `README.md` in your project folder.
