@@ -20,7 +20,9 @@
   ],
   "license": "BSD-3-Clause",
   "main": "index.html",
-  "bin": "bin/nw-react-scripts.js",
+  "bin": {
+    "nw-react-scripts": "./bin/nw-react-scripts.js"
+  },
   "repository": "naviapps/create-nw-react-app",
   "dependencies": {
     "autoprefixer": "^7.1.3",
