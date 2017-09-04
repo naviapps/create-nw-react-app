@@ -1,23 +1,28 @@
 {
   "name": "create-nw-react-app",
   "version": "0.1.0",
-  "description": "Create NW.js React apps with no build configuration.",
   "keywords": [
     "nw",
     "nw.js",
     "nwjs",
     "react"
   ],
+  "description": "Create NW.js React apps with no build configuration.",
+  "repository": "naviapps/create-nw-react-app",
+  "license": "BSD-3-Clause",
+  "engines": {
+    "node": ">=6"
+  },
+  "bugs": {
+    "url": "https://github.com/naviapps/create-nw-react-app/issues"
+  },
   "files": [
     "index.js",
     "createNwReactApp.js"
   ],
-  "license": "BSD-3-Clause",
-  "bin": "index.js",
-  "bugs": {
-    "url": "https://github.com/naviapps/create-nw-react-app/issues"
+  "bin": {
+    "create-nw-react-app": "./index.js"
   },
-  "repository": "naviapps/create-nw-react-app",
   "dependencies": {
     "chalk": "^2.1.0",
     "commander": "^2.11.0",
@@ -28,8 +33,5 @@
     "tar-pack": "^3.4.0",
     "tmp": "0.0.33",
     "validate-npm-package-name": "^3.0.0"
-  },
-  "engines": {
-    "node": ">=6"
   }
 }

@@ -1,4 +1,15 @@
 #!/bin/sh
+# Copyright (c) 2017-present, Navi Apps, Inc.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree. An additional grant
+# of patent rights can be found in the PATENTS file in the same directory.
+
+# ******************************************************************************
+# This creates an app with the global CLI and `nw-react-scripts` from the source.
+# It is useful for testing the end-to-end flow locally.
+# ******************************************************************************
 
 # Start in tasks/ even if run from root directory
 cd "$(dirname "$0")"

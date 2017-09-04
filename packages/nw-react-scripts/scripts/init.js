@@ -1,4 +1,12 @@
 // @remove-file-on-eject
+/**
+ * Copyright (c) 2017-present, Navi Apps, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
 'use strict';
 
 // Makes the script crash on unhandled rejections instead of silently
@@ -29,6 +37,9 @@ module.exports = function(
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
 
+  // Setup the main
+  appPackage.main = 'index.html';
+
   // Setup the script rules
   appPackage.scripts = {
     start: 'nw-react-scripts start',
@@ -37,11 +48,10 @@ module.exports = function(
     eject: 'nw-react-scripts eject',
   };
 
-  appPackage.main = 'index.html';
-
+  // Setup the nw-builder rules
   appPackage.nwBuilder = {
     platforms: ['osx64', 'win32', 'win64'],
-    version: '0.24.4',
+    version: 'latest',
     buildDir: './build',
     cacheDir: './cache',
   };
@@ -151,7 +161,7 @@ module.exports = function(
   console.log('Inside that directory, you can run several commands:');
   console.log();
   console.log(chalk.cyan(`  ${displayedCommand} start`));
-  console.log('    Starts the development app.');
+  console.log('    Starts the development server.');
   console.log();
   console.log(
     chalk.cyan(`  ${displayedCommand} ${useYarn ? '' : 'run '}build`)

@@ -1,7 +1,18 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <script>
+      let publicPath = '/';
+      if (typeof process !== 'undefined' && process.env.NODE_ENV === 'development') {
+        const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
+        const host = process.env.HOST || '0.0.0.0';
+        const port = parseInt(process.env.PORT, 10) || 3000;
+        publicPath = protocol + '://' + host + ':' + port + '/';
+      }
+    </script>
     <title>NW.js React App</title>
   </head>
   <body>
@@ -10,12 +21,31 @@
     </noscript>
     <div id="root"></div>
     <script>
+      // manifest.json provides metadata used when your web app is added to the
+      // homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
+      let link = document.createElement('link');
+      link.rel = 'manifest';
+      link.href = publicPath + 'manifest.json';
+      document.getElementsByTagName('head')[0].appendChild(link);
+
+      link = document.createElement('link');
+      link.rel = 'shortcut icon';
+      link.href = publicPath + 'favicon.ico';
+      document.getElementsByTagName('head')[0].appendChild(link);
+
       if (typeof process !== 'undefined' && process.env.NODE_ENV === 'development') {
-        const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
-        const host = process.env.HOST || '0.0.0.0';
-        const port = parseInt(process.env.PORT, 10) || 3000;
-        document.write('<script src="' + protocol + '://' + host + ':' + port + '/static/js/bundle.js"><\/script>');
+        document.write('<script src="' + publicPath + 'static/js/bundle.js"><\/script>');
       }
     </script>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
   </body>
 </html>

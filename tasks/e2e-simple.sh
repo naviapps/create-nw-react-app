@@ -1,15 +1,15 @@
 #!/bin/bash
+# Copyright (c) 2017-present, Navi Apps, Inc.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree. An additional grant
+# of patent rights can be found in the PATENTS file in the same directory.
 
-
-
-
-
-
-
-
-
-
-
+# ******************************************************************************
+# This is an end-to-end test intended to run on CI.
+# You can also run it locally but it's slow.
+# ******************************************************************************
 
 # Start in tasks/ even if run from root directory
 cd "$(dirname "$0")"
@@ -87,9 +87,9 @@ fi
 if hash npm 2>/dev/null
 then
   # npm 5 is too buggy right now
-  # if [ $(npm -v | head -c 1) -eq 5 ]; then
-  #   npm i -g npm@^4.x
-  # fi;
+  if [ $(npm -v | head -c 1) -eq 5 ]; then
+    npm i -g npm@^4.x
+  fi;
   npm cache clean || npm cache verify
 fi
 
@@ -126,16 +126,8 @@ fi
 node bootstrap.js
 
 # Lint own code
-# ./node_modules/.bin/eslint --max-warnings 0 packages/babel-preset-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/create-nw-react-app/
-# ./node_modules/.bin/eslint --max-warnings 0 packages/eslint-config-react-app/
-# ./node_modules/.bin/eslint --max-warnings 0 packages/react-dev-utils/
 ./node_modules/.bin/eslint --max-warnings 0 packages/nw-react-scripts/
-# cd packages/react-error-overlay/
-# ./node_modules/.bin/eslint --max-warnings 0 src/
-# npm test
-# npm run build:prod
-# cd ../..
 
 # ******************************************************************************
 # First, test the create-nw-react-app development environment.
@@ -309,9 +301,6 @@ verify_module_scope
 echo yes | npm run eject
 
 # ...but still link to the local packages
-# npm link "$root_path"/packages/babel-preset-react-app
-# npm link "$root_path"/packages/eslint-config-react-app
-# npm link "$root_path"/packages/react-dev-utils
 npm link "$root_path"/packages/nw-react-scripts
 
 # Test the build

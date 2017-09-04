@@ -1,3 +1,13 @@
+// @remove-on-eject-begin
+/**
+ * Copyright (c) 2017-present, Navi Apps, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+// @remove-on-eject-end
 'use strict';
 
 // Do this as the first thing so that any code reading it knows the right env.
@@ -37,7 +47,6 @@ const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 
 // Warn and crash if required files are missing
-console.log(paths.appHtml);
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
@@ -50,7 +59,7 @@ const HOST = process.env.HOST || '0.0.0.0';
 // run on a different port. `detect()` Promise resolves to the next free port.
 choosePort(HOST, DEFAULT_PORT)
   .then(port => {
-    if (port === null) {
+    if (port == null) {
       // We have not found a port.
       return;
     }
@@ -78,6 +87,7 @@ choosePort(HOST, DEFAULT_PORT)
       }
       console.log(chalk.cyan('Starting the development server...\n'));
 
+      // Run the app
       const options = appPackageJson.nwBuilder;
       options.files = `${paths.appPath}/**/**`;
       options.flavor = 'sdk';
@@ -85,10 +95,12 @@ choosePort(HOST, DEFAULT_PORT)
       nw
         .run()
         .then(() => {
-          process.emit('SIGINT');
+          devServer.close();
+          process.exit();
         })
         .catch(err => {
-          throw err;
+          console.error(err);
+          process.exit(1);
         });
     });
 

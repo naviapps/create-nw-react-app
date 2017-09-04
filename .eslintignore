@@ -3,3 +3,4 @@ cache
 build
 my-app*
 packages/nw-react-scripts/template
+packages/react-scripts/fixtures

@@ -1,13 +1,15 @@
 {
   "name": "create-nw-react-app",
   "version": "0.1.0",
+  "private": true,
   "main": "packages/nw-react-scripts/template/index.html",
   "scripts": {
     "build": "node packages/nw-react-scripts/scripts/build.js",
     "changelog": "lerna-changelog",
     "create-nw-react-app": "tasks/cnra.sh",
+    "e2e": "tasks/e2e-simple.sh",
     "postinstall": "node bootstrap.js",
-    "publish": "lerna publish --independent",
+    "publish": "tasks/release.sh",
     "start": "node packages/nw-react-scripts/scripts/start.js",
     "test": "node packages/nw-react-scripts/scripts/test.js --env=jsdom",
     "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
@@ -21,7 +23,6 @@
     "lint-staged": "^4.0.4",
     "prettier": "^1.6.1"
   },
-  "private": true,
   "lint-staged": {
     "*.js": [
       "prettier --trailing-comma es5 --single-quote --write",
