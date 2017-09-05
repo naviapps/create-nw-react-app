@@ -21,6 +21,8 @@ npm start
 Then open app and [http://localhost:3000/](http://localhost:3000/) to see your app.<br>
 When you’re ready to release to production, create a minified bundle with `npm run build`.
 
+<img src='https://raw.githubusercontent.com/naviapps/create-nw-react-app/master/.github/npm_start.png' width='600' alt='npm start'>
+
 ### Get Started Immediately
 
 You **don’t** need to install or configure tools like Webpack or Babel.<br>
@@ -84,6 +86,8 @@ Open app and [http://localhost:3000](http://localhost:3000) to view it in the br
 
 The page will reload if you make edits.<br>
 You will see the build errors and lint warnings in the console.
+
+<img src='https://raw.githubusercontent.com/naviapps/create-nw-react-app/master/.github/build_errors.png' width='600' alt='Build errors'>
 
 ### `npm test` or `yarn test`
 
