@@ -108,6 +108,11 @@ Your app is ready to be released.
 
 ## User Guide
 
+The [User Guide](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md) includes information on different topics, such as:
+
 - [Folder Structure](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md#folder-structure)
+- [Available Scripts](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md#available-scripts)
+- [Supported Language Features and Polyfills](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md#supported-language-features-and-polyfills)
+- [Syntax Highlighting in the Editor](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md#syntax-highlighting-in-the-editor)
 
 A copy of the user guide will be created as `README.md` in your project folder.
