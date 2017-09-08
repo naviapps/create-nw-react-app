@@ -140,7 +140,7 @@ module.exports = {
               eslintPath: require.resolve('eslint'),
               // @remove-on-eject-begin
               baseConfig: {
-                extends: [require.resolve('eslint-config-react-app')],
+                extends: [require.resolve('eslint-config-nw-react-app')],
               },
               ignore: false,
               useEslintrc: false,
@@ -291,4 +291,7 @@ module.exports = {
   performance: {
     hints: false,
   },
+  // Intructs webpack to target a specific environment.
+  // https://webpack.js.org/configuration/target/
+  target: 'node-webkit',
 };

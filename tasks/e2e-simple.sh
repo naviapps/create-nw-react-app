@@ -127,6 +127,7 @@ node bootstrap.js
 
 # Lint own code
 ./node_modules/.bin/eslint --max-warnings 0 packages/create-nw-react-app/
+./node_modules/.bin/eslint --max-warnings 0 packages/eslint-config-nw-react-app/
 ./node_modules/.bin/eslint --max-warnings 0 packages/nw-react-scripts/
 
 # ******************************************************************************
@@ -301,6 +302,7 @@ verify_module_scope
 echo yes | npm run eject
 
 # ...but still link to the local packages
+npm link "$root_path"/packages/eslint-config-nw-react-app
 npm link "$root_path"/packages/nw-react-scripts
 
 # Test the build

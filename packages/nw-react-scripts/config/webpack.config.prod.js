@@ -143,7 +143,7 @@ module.exports = {
               // TODO: consider separate config for production,
               // e.g. to enable no-console and no-debugger only in production.
               baseConfig: {
-                extends: [require.resolve('eslint-config-react-app')],
+                extends: [require.resolve('eslint-config-nw-react-app')],
               },
               ignore: false,
               useEslintrc: false,
@@ -360,4 +360,7 @@ module.exports = {
     tls: 'empty',
     child_process: 'empty',
   },
+  // Intructs webpack to target a specific environment.
+  // https://webpack.js.org/configuration/target/
+  target: 'node-webkit',
 };
