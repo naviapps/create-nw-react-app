@@ -166,7 +166,7 @@ Some features are currently **not supported**:
 
 * Server rendering.
 * Some experimental syntax extensions (e.g. decorators).
-* CSS Modules.
+* CSS Modules (see [#2285](https://github.com/facebookincubator/create-react-app/pull/2285)).
 * Importing LESS or Sass directly ([but you still can use them](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md#adding-a-css-preprocessor-sass-less-etc)).
 
 Some of them might get added in the future if they are stable, are useful to majority of NW.js React apps, don’t conflict with existing tools, and don’t introduce additional configuration.

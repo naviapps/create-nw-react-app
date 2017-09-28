@@ -9,7 +9,7 @@
   ],
   "description": "Create NW.js React apps with no build configuration.",
   "repository": "naviapps/create-nw-react-app",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "engines": {
     "node": ">=6"
   },

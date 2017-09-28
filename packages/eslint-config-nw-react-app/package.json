@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "ESLint configuration used by Create NW.js React App",
   "repository": "naviapps/create-nw-react-app",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/naviapps/create-nw-react-app/issues"
   },

@@ -9,7 +9,7 @@
     "react"
   ],
   "repository": "naviapps/create-nw-react-app",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "engines": {
     "node": ">=6"
   },
@@ -40,7 +40,7 @@
     "css-loader": "^0.28.7",
     "dotenv": "^4.0.0",
     "eslint": "^4.7.0",
-    "eslint-config-nw-react-app": "^1.0.0",
+    "eslint-config-nw-react-app": "^1.0.1",
     "eslint-loader": "^1.9.0",
     "eslint-plugin-flowtype": "^2.35.1",
     "eslint-plugin-import": "^2.7.0",
@@ -50,7 +50,7 @@
     "file-loader": "^0.11.2",
     "fs-extra": "^4.0.2",
     "html-webpack-plugin": "^2.30.1",
-    "jest": "^21.1.0",
+    "jest": "^21.2.1",
     "nw-builder": "^3.4.1",
     "object-assign": "^4.1.1",
     "postcss-flexbugs-fixes": "^3.2.0",
@@ -66,8 +66,8 @@
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
   },
   "optionalDependencies": {
     "fsevents": "^1.1.2"
