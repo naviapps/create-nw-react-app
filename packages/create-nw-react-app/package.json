@@ -24,7 +24,7 @@
     "create-nw-react-app": "./index.js"
   },
   "dependencies": {
-    "chalk": "^2.1.0",
+    "chalk": "^2.2.0",
     "commander": "^2.11.0",
     "cross-spawn": "^5.1.0",
     "fs-extra": "^4.0.2",
