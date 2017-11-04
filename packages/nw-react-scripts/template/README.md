@@ -114,7 +114,7 @@ In addition to [ES6](https://github.com/lukehoban/es6features) syntax features, 
 
 Learn more about [different proposal stages](https://babeljs.io/docs/plugins/#presets-stage-x-experimental-presets-).
 
-While we recommend to use experimental proposals with some caution, Facebook heavily uses these features in the product code, so we intend to provide [codemods](https://medium.com/@cpojer/effective-javascript-codemods-5a6686bb46fb) if any of these proposals change in the future.
+While we recommend using experimental proposals with some caution, Facebook heavily uses these features in the product code, so we intend to provide [codemods](https://medium.com/@cpojer/effective-javascript-codemods-5a6686bb46fb) if any of these proposals change in the future.
 
 Note that **the project only includes a few ES6 [polyfills](https://en.wikipedia.org/wiki/Polyfill)**:
 
@@ -267,7 +267,8 @@ Then we can change `start` and `build` scripts to include the CSS preprocessor c
 -    "build": "nw-react-scripts build",
 +    "start-js": "nw-react-scripts start",
 +    "start": "npm-run-all -p watch-css start-js",
-+    "build": "npm run build-css && nw-react-scripts build",
++    "build-js": "nw-react-scripts build",
++    "build": "npm-run-all build-css build-js",
      "test": "nw-react-scripts test --env=jsdom",
      "eject": "nw-react-scripts eject"
    }

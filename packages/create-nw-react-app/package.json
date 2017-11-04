@@ -24,13 +24,13 @@
     "create-nw-react-app": "./index.js"
   },
   "dependencies": {
-    "chalk": "^2.2.0",
+    "chalk": "^2.3.0",
     "commander": "^2.11.0",
     "cross-spawn": "^5.1.0",
     "fs-extra": "^4.0.2",
     "hyperquest": "^2.1.2",
     "semver": "^5.4.1",
-    "tar-pack": "^3.4.0",
+    "tar-pack": "^3.4.1",
     "tmp": "0.0.33",
     "validate-npm-package-name": "^3.0.0"
   }

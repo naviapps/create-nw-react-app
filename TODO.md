@@ -1,6 +1,6 @@
 ```text
 https://github.com/facebookincubator/create-react-app/compare/react-scripts@1.0.14...master
-create-nw-react-app                 react-scripts@1.0.14
+create-nw-react-app                 react-scripts@1.0.17
   /packages
     /create-nw-react-app
       /createNwReactApp.js

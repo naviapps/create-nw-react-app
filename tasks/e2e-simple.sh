@@ -43,6 +43,31 @@ function create_nw_react_app {
   node "$temp_cli_path"/node_modules/create-nw-react-app/index.js "$@"
 }
 
+function install_package {
+  local pkg=$(basename $1)
+
+  # Clean target (for safety)
+  rm -rf node_modules/$pkg/
+  rm -rf node_modules/**/$pkg/
+
+  # Copy package into node_modules/ ignoring installed deps
+  # rsync -a ${1%/} node_modules/ --exclude node_modules
+  cp -R ${1%/} node_modules/
+  rm -rf node_modules/$pkg/node_modules/
+
+  # Install `dependencies`
+  cd node_modules/$pkg/
+  if [ "$USE_YARN" = "yes" ]
+  then
+    yarn install --production
+  else
+    npm install --only=production
+  fi
+  # Remove our packages to ensure side-by-side versions are used (which we link)
+  rm -rf node_modules/{eslint-config-nw-react-app,nw-react-scripts}
+  cd ../..
+}
+
 # Check for the existence of one or more files.
 function exists {
   for f in $*; do
@@ -299,9 +324,16 @@ verify_module_scope
 # Eject...
 echo yes | npm run eject
 
+# Ensure Yarn is ran after eject; at the time of this commit, we don't run Yarn
+# after ejecting. Soon, we may only skip Yarn on Windows. Let's try to remove
+# this in the near future.
+if hash yarnpkg 2>/dev/null
+then
+  yarnpkg install --check-files
+fi
+
 # ...but still link to the local packages
-npm link "$root_path"/packages/eslint-config-nw-react-app
-npm link "$root_path"/packages/nw-react-scripts
+install_package "$root_path"/packages/eslint-config-nw-react-app
 
 # Test the build
 npm run build

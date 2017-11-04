@@ -6,7 +6,7 @@ Create NW.js React apps with no build configuration.
 * [User Guide](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md) – How to develop apps bootstrapped with Create NW.js React App.
 
 Create NW.js React App works on macOS, Windows, and Linux.<br>
-If something doesn’t work please [file an issue](https://github.com/naviapps/create-nw-react-app/issues/new).
+If something doesn’t work, please [file an issue](https://github.com/naviapps/create-nw-react-app/issues/new).
 
 ## Quick Overview
 
@@ -84,7 +84,7 @@ Once the installation is done, you can run some commands inside the project fold
 Runs the app in development mode.<br>
 Open app and [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br>
+The page will automatically reload if you make changes to the code.<br>
 You will see the build errors and lint warnings in the console.
 
 <img src='https://raw.githubusercontent.com/naviapps/create-nw-react-app/master/.github/build_errors.png' width='600' alt='Build errors'>
