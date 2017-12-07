@@ -36,6 +36,7 @@ const {
   prepareUrls,
 } = require('react-dev-utils/WebpackDevServerUtils');
 const NwBuilder = require('nw-builder');
+const detectCurrentPlatform = require('nw-builder/lib/detectCurrentPlatform');
 const paths = require('../config/paths');
 const config = require('../config/webpack.config.dev');
 const createDevServerConfig = require('../config/webpackDevServer.config');
@@ -89,6 +90,13 @@ choosePort(HOST, DEFAULT_PORT)
       const options = appPackageJson.nwBuilder;
       options.files = `${paths.appPath}/**/**`;
       options.flavor = 'sdk';
+
+      const currentPlatform = detectCurrentPlatform();
+      if (!options.platforms) {
+        options.platforms = [currentPlatform];
+      }
+      options.currentPlatform = currentPlatform;
+
       const nw = new NwBuilder(options);
       nw
         .run()
