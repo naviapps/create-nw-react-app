@@ -35,9 +35,6 @@ module.exports = function(
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
 
-  // Setup the main
-  appPackage.main = 'index.html';
-
   // Setup the script rules
   appPackage.scripts = {
     start: 'nw-react-scripts start',
@@ -45,6 +42,9 @@ module.exports = function(
     test: 'nw-react-scripts test --env=jsdom',
     eject: 'nw-react-scripts eject',
   };
+
+  // Setup the main rule
+  appPackage.main = 'index.html';
 
   // Setup the nw-builder rules
   appPackage.nwBuilder = {

@@ -92,7 +92,7 @@ const reactScriptsLinked =
   fs.existsSync(reactScriptsPath) &&
   fs.lstatSync(reactScriptsPath).isSymbolicLink();
 
-// config before eject: we're in ./node_modules/nw-react-scripts/config/
+// config before publish: we're in ./packages/nw-react-scripts/config/
 if (
   !reactScriptsLinked &&
   __dirname.indexOf(path.join('packages', 'nw-react-scripts', 'config')) !== -1

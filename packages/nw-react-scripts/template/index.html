@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#000000">
     <script>
       let publicPath = '/';
-      if (typeof process !== 'undefined' && process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV === 'development') {
         const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
         const host = process.env.HOST || '0.0.0.0';
         const port = parseInt(process.env.PORT, 10) || 3000;
@@ -33,7 +33,7 @@
       link.href = publicPath + 'favicon.ico';
       document.getElementsByTagName('head')[0].appendChild(link);
 
-      if (typeof process !== 'undefined' && process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV === 'development') {
         document.write('<script src="' + publicPath + 'static/js/bundle.js"><\/script>');
       }
     </script>

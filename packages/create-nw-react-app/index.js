@@ -36,11 +36,11 @@
 
 'use strict';
 
-const chalk = require('chalk');
+var chalk = require('chalk');
 
-const currentNodeVersion = process.versions.node;
-const semver = currentNodeVersion.split('.');
-const major = semver[0];
+var currentNodeVersion = process.versions.node;
+var semver = currentNodeVersion.split('.');
+var major = semver[0];
 
 if (major < 6) {
   console.error(

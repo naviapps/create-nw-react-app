@@ -135,10 +135,11 @@ createApp(
   projectName,
   program.verbose,
   program.scriptsVersion,
+  program.useNpm,
   hiddenProgram.internalTestingTemplate
 );
 
-function createApp(name, verbose, version, template) {
+function createApp(name, verbose, version, useNpm, template) {
   const root = path.resolve(name);
   const appName = path.basename(root);
 
@@ -161,7 +162,7 @@ function createApp(name, verbose, version, template) {
     JSON.stringify(packageJson, null, 2)
   );
 
-  const useYarn = shouldUseYarn();
+  const useYarn = useNpm ? false : shouldUseYarn();
   const originalDirectory = process.cwd();
   process.chdir(root);
   if (!useYarn && !checkThatNpmCanReadCwd()) {
@@ -169,26 +170,16 @@ function createApp(name, verbose, version, template) {
   }
 
   if (!semver.satisfies(process.version, '>=6.0.0')) {
-    console.log(
-      chalk.yellow(
-        `You are using Node ${process.version} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-          `Please update to Node 6 or higher for a better, fully supported experience.\n`
-      )
-    );
+    console.log(chalk.yellow(`Please update to Node 6 or higher.\n`));
     // Fall back to latest supported react-scripts on Node 4
-    version = 'react-scripts@0.9.x';
+    process.exit(1);
   }
 
   if (!useYarn) {
     const npmInfo = checkNpmVersion();
     if (!npmInfo.hasMinNpm) {
       if (npmInfo.npmVersion) {
-        console.log(
-          chalk.yellow(
-            `You are using npm ${npmInfo.npmVersion} so the project will be boostrapped with an old unsupported version of tools.\n\n` +
-              `Please update to npm 3 or higher for a better, fully supported experience.\n`
-          )
-        );
+        console.log(chalk.yellow(`Please update to npm 3 or higher.\n`));
       }
       // Fall back to latest supported nw-react-scripts for npm 3
       process.exit(1);
