@@ -1,6 +1,6 @@
 ```text
 https://github.com/facebookincubator/create-react-app/compare/react-scripts@1.0.14...master
-create-nw-react-app                 react-scripts@1.0.17  1,277 commits
+create-nw-react-app                 react-scripts@1.0.17  1,278 commits
   /doc
     /README.ja.md TODO
   /packages
@@ -38,7 +38,7 @@ create-nw-react-app                 react-scripts@1.0.17  1,277 commits
         /test.js
       /template
         /public
-          /favicon.ico
+          /favicon.ico TODO
           /manifest.json
         /src
           /App.css
@@ -71,7 +71,7 @@ create-nw-react-app                 react-scripts@1.0.17  1,277 commits
   /CONTRIBUTING.md
   /LICENSE
   /PATENTS
-  /README.md                        TODO
+  /README.md                        TODO User Guide
   /appveyor.cleanup-cache.txt
   /appveyor.yml
   /bootstrap.js

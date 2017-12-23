@@ -8,6 +8,8 @@ Create NW.js React apps with no build configuration.
 Create NW.js React App works on macOS, Windows, and Linux.<br>
 If something doesn’t work, please [file an issue](https://github.com/naviapps/create-nw-react-app/issues/new).
 
+*Language: English / [日本語](https://github.com/naviapps/create-nw-react-app/blob/master/doc/README.ja.md)*
+
 ## Quick Overview
 
 ```sh
@@ -18,7 +20,7 @@ cd my-app/
 npm start
 ```
 
-Then open app and [http://localhost:3000/](http://localhost:3000/) to see your app.<br>
+Then see your app.<br>
 When you’re ready to release to production, create a minified package with `npm run build`.
 
 <img src='https://raw.githubusercontent.com/naviapps/create-nw-react-app/master/.github/npm_start.png' width='600' alt='npm start'>
@@ -81,8 +83,7 @@ Once the installation is done, you can run some commands inside the project fold
 
 ### `npm start` or `yarn start`
 
-Runs the app in development mode.<br>
-Open app and [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Runs the app in development mode.
 
 The page will automatically reload if you make changes to the code.<br>
 You will see the build errors and lint warnings in the console.
@@ -101,8 +102,7 @@ By default, runs tests related to files changed since the last commit.
 Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br>
-By default, it also [includes a service worker](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md#making-a-progressive-web-app) so that your app loads from local cache on future visits.
+The build is minified and the filenames include the hashes.
 
 Your app is ready to be released.
 
@@ -144,7 +144,6 @@ Please refer to the [User Guide](https://github.com/naviapps/create-nw-react-app
 * Autoprefixed CSS, so you don’t need `-webkit` or other prefixes.
 * A `build` script to bundle JS, CSS, and images for production, with sourcemaps.
 * An offline-first [service worker](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers) and a [web app manifest](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/), meeting all the [Progressive Web App](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md#making-a-progressive-web-app) criteria.
-* Hot reloading of components.
 
 **The feature set is intentionally limited**. It doesn’t support advanced features such as server rendering or CSS modules. The tool is also **non-configurable** because it is hard to provide a cohesive experience and easy updates across a set of tools when the user can tweak anything.
 
@@ -168,6 +167,7 @@ Some features are currently **not supported**:
 * Some experimental syntax extensions (e.g. decorators).
 * CSS Modules (see [#2285](https://github.com/facebookincubator/create-react-app/pull/2285)).
 * Importing LESS or Sass directly ([but you still can use them](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md#adding-a-css-preprocessor-sass-less-etc)).
+* Hot reloading of components.
 
 Some of them might get added in the future if they are stable, are useful to majority of NW.js React apps, don’t conflict with existing tools, and don’t introduce additional configuration.
 
@@ -184,3 +184,7 @@ Currently it is a thin layer on top of many amazing community projects, such as:
 * and others.
 
 All of them are transitive dependencies of the provided npm package.
+
+## Contributing
+
+We'd love to have your helping hand on `create-nw-react-app`! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on what we're looking for and how to get started.
