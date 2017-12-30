@@ -21,7 +21,7 @@ npm start
 ```
 
 Then see your app.<br>
-When you’re ready to release to production, create a minified package with `npm run build`.
+When you’re ready to release to production, create a minified app with `npm run build`.
 
 <img src='https://raw.githubusercontent.com/naviapps/create-nw-react-app/master/.github/npm_start.png' width='600' alt='npm start'>
 

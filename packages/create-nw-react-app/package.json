@@ -27,7 +27,7 @@
     "chalk": "^2.3.0",
     "commander": "^2.12.2",
     "cross-spawn": "^5.1.0",
-    "fs-extra": "^4.0.3",
+    "fs-extra": "^5.0.0",
     "hyperquest": "^2.1.2",
     "semver": "^5.4.1",
     "tar-pack": "^3.4.1",

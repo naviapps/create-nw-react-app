@@ -52,6 +52,7 @@ module.exports = function(
     version: 'latest',
     buildDir: './build',
     cacheDir: './cache',
+    macIcns: './src/logo.icns',
   };
 
   fs.writeFileSync(

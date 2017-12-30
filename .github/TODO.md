@@ -1,8 +1,8 @@
 ```text
 https://github.com/facebookincubator/create-react-app/compare/react-scripts@1.0.14...master
-create-nw-react-app                 react-scripts@1.0.17  1,278 commits
+create-nw-react-app                 react-scripts@1.0.17  1,280 commits
   /doc
-    /README.ja.md TODO
+    /README.ja.md
   /packages
     /create-nw-react-app
       /createNwReactApp.js
