@@ -94,6 +94,7 @@ measureFileSizesBeforeBuild(paths.appBuild)
       const options = appPackageJson.nwBuilder;
       options.files = `${paths.appBuild}/**/*`;
       options.flavor = 'normal';
+
       const nw = new NwBuilder(options);
       nw
         .build()

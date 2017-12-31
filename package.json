@@ -16,12 +16,12 @@
     "precommit": "lint-staged"
   },
   "devDependencies": {
-    "eslint": "^4.13.0",
-    "husky": "^0.14.3",
-    "lerna": "^2.5.1",
-    "lerna-changelog": "^0.7.0",
-    "lint-staged": "^6.0.0",
-    "prettier": "^1.9.1"
+    "eslint": "^4.4.1",
+    "husky": "^0.13.2",
+    "lerna": "^2.0.0",
+    "lerna-changelog": "^0.6.0",
+    "lint-staged": "^3.3.1",
+    "prettier": "^1.6.1"
   },
   "lint-staged": {
     "*.js": [
@@ -34,5 +34,16 @@
     "package-lock.json": [
       "git rm --cached"
     ]
+  },
+  "nwBuilder": {
+    "platforms": [
+      "osx64",
+      "win32",
+      "win64"
+    ],
+    "version": "latest",
+    "buildDir": "./build",
+    "cacheDir": "./cache",
+    "macIcns": "./packages/nw-react-scripts//template/src/logo.icns"
   }
 }
