@@ -104,7 +104,7 @@ if (
     appPublic: resolveOwn('template/public'),
     appHtml: resolveOwn('template/index.html'),
     appIndexJs: resolveOwn('template/src/index.js'),
-    appPackageJson: resolveOwn('../../package.json'),
+    appPackageJson: resolveOwn('package.json'),
     appSrc: resolveOwn('template/src'),
     yarnLockFile: resolveOwn('template/yarn.lock'),
     testsSetup: resolveOwn('template/src/setupTests.js'),

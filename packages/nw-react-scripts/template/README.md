@@ -36,7 +36,7 @@ my-app/
   .gitignore
   public/
     favicon.ico
-│  manifest.json
+    manifest.json
   src/
     App.css
     App.js
@@ -70,7 +70,7 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.<br>
-Open app and [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open app to view it.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
@@ -123,6 +123,8 @@ Note that **the project only includes a few ES6 [polyfills](https://en.wikipedia
 * [`fetch()`](https://developer.mozilla.org/en/docs/Web/API/Fetch_API) via [`whatwg-fetch`](https://github.com/github/fetch).
 
 If you use any other ES6+ features that need **runtime support** (such as `Array.from()` or `Symbol`), make sure you are including the appropriate polyfills manually, or that the browsers you are targeting already support them.
+
+Also note that using some newer syntax features like `for...of` or `[...nonArrayValue]` causes Babel to emit code that depends on ES6 runtime features and might not work without a polyfill. When in doubt, use [Babel REPL](https://babeljs.io/repl/) to see what any specific syntax compiles down to.
 
 ## Syntax Highlighting in the Editor
 

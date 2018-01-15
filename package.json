@@ -1,27 +1,27 @@
 {
-  "name": "create-nw-react-app",
-  "version": "0.1.0",
   "private": true,
-  "main": "packages/nw-react-scripts/template/index.html",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "build": "node packages/nw-react-scripts/scripts/build.js",
+    "build": "cd packages/nw-react-scripts && node scripts/build.js",
     "changelog": "lerna-changelog",
-    "create-nw-react-app": "tasks/cnra.sh",
-    "e2e": "tasks/e2e-simple.sh",
-    "postinstall": "node bootstrap.js",
-    "publish": "tasks/release.sh",
-    "start": "node packages/nw-react-scripts/scripts/start.js",
-    "test": "node packages/nw-react-scripts/scripts/test.js --env=jsdom",
+    "create-nw-react-app": "node tasks/cnra.js",
+    "publish": "tasks/publish.sh",
+    "start": "cd packages/nw-react-scripts && node scripts/start.js",
+    "screencast": "svg-term --cast hItN7sl5yfCPTHxvFg5glhhfp --out screencast.svg --window",
+    "test": "cd packages/nw-react-scripts && node scripts/test.js --env=jsdom",
     "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
     "precommit": "lint-staged"
   },
   "devDependencies": {
     "eslint": "^4.4.1",
     "husky": "^0.13.2",
-    "lerna": "^2.0.0",
+    "lerna": "2.6.0",
     "lerna-changelog": "^0.6.0",
     "lint-staged": "^3.3.1",
-    "prettier": "^1.6.1"
+    "prettier": "1.6.1",
+    "svg-term-cli": "^2.0.3"
   },
   "lint-staged": {
     "*.js": [
@@ -30,20 +30,6 @@
     ],
     "yarn.lock": [
       "git rm --cached"
-    ],
-    "package-lock.json": [
-      "git rm --cached"
     ]
-  },
-  "nwBuilder": {
-    "platforms": [
-      "osx64",
-      "win32",
-      "win64"
-    ],
-    "version": "latest",
-    "buildDir": "./build",
-    "cacheDir": "./cache",
-    "macIcns": "./packages/nw-react-scripts//template/src/logo.icns"
   }
 }

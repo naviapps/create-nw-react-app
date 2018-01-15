@@ -26,17 +26,10 @@ set -x
 cd ..
 root_path=$PWD
 
-# You can only release with npm >= 3
-if [ $(npm -v | head -c 1) -lt 3 ]; then
-  echo "Releasing requires npm >= 3. Aborting.";
-  exit 1;
-fi;
-
 if [ -n "$(git status --porcelain)" ]; then
   echo "Your git status is not clean. Aborting.";
   exit 1;
 fi
 
-cd "$root_path"
 # Go!
 ./node_modules/.bin/lerna publish --independent "$@"

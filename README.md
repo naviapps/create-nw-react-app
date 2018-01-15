@@ -2,7 +2,7 @@
 
 Create NW.js React apps with no build configuration.
 
-* [Getting Started](#getting-started) – How to create a new app.
+* [Creating an App](#creating-an-app) – How to create a new app.
 * [User Guide](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md) – How to develop apps bootstrapped with Create NW.js React App.
 
 Create NW.js React App works on macOS, Windows, and Linux.<br>
@@ -13,17 +13,19 @@ If something doesn’t work, please [file an issue](https://github.com/naviapps/
 ## Quick Overview
 
 ```sh
-npm install -g create-nw-react-app
-
-create-nw-react-app my-app
-cd my-app/
+npx create-nw-react-app my-app
+cd my-app
 npm start
 ```
+
+*([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))*
 
 Then see your app.<br>
 When you’re ready to release to production, create a minified app with `npm run build`.
 
-<img src='https://raw.githubusercontent.com/naviapps/create-nw-react-app/master/.github/npm_start.png' width='600' alt='npm start'>
+<p align='center'>
+<img src='https://raw.githubusercontent.com/naviapps/create-nw-react-app/master/.github/npm_start.png' width='600' alt=''>
+</p>
 
 ### Get Started Immediately
 
@@ -32,28 +34,17 @@ They are preconfigured and hidden so that you can focus on the code.
 
 Just create a project, and you’re good to go.
 
-## Getting Started
+## Creating an App
 
-### Installation
+**You’ll need to have Node >= 6 on your local development machine** (but it’s not required on the server). You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to easily switch Node versions between different projects.
 
-Install it once globally:
-
-```sh
-npm install -g create-nw-react-app
-```
-
-**You’ll need to have Node >= 6 on your machine**. You can use [nvm](https://github.com/creationix/nvm#installation) to easily switch Node versions between different projects.
-
-**This tool doesn’t assume a Node backend**. The Node installation is only required for Create NW.js React App itself.
-
-### Creating an App
-
-To create a new app, run:
+To create a new app, run a single command:
 
 ```sh
-create-nw-react-app my-app
-cd my-app
+npx create-nw-react-app my-app
 ```
+
+*([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))*
 
 It will create a directory called `my-app` inside the current folder.<br>
 Inside that directory, it will generate the initial project structure and install the transitive dependencies:
@@ -79,7 +70,13 @@ my-app
 ```
 
 No configuration or complicated folder structures, just the files you need to build your app.<br>
-Once the installation is done, you can run some commands inside the project folder:
+Once the installation is done, you can open your project folder:
+
+```sh
+cd my-app
+```
+
+Inside the newly created project, you can run some built-in commands:
 
 ### `npm start` or `yarn start`
 
@@ -133,57 +130,20 @@ Please refer to the [User Guide](https://github.com/naviapps/create-nw-react-app
 
 * **No Lock-In:** You can “eject” to a custom setup at any time. Run a single command, and all the configuration and build dependencies will be moved directly into your project, so you can pick up right where you left off.
 
-## Why Use This?
+## What’s Included?
 
-**If you’re getting started** with NW.js React, use `create-nw-react-app` to automate the build of your app. There is no configuration file, and `nw-react-scripts` is the only extra build dependency in your `package.json`. Your environment will have everything you need to build a modern NW.js React app:
+Your environment will have everything you need to build a modern single-page NW.js React app:
 
 * NW.js, React, JSX, ES6, and Flow syntax support.
 * Language extras beyond ES6 like the object spread operator.
-* A dev server that lints for common errors.
-* Import CSS and image files directly from JavaScript.
 * Autoprefixed CSS, so you don’t need `-webkit` or other prefixes.
-* A `build` script to bundle JS, CSS, and images for production, with sourcemaps.
+* A fast interactive unit test runner with built-in support for coverage reporting.
+* A live development server that warns about common mistakes.
+* A build script to bundle JS, CSS, and images for production, with hashes and sourcemaps.
 * An offline-first [service worker](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers) and a [web app manifest](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/), meeting all the [Progressive Web App](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md#making-a-progressive-web-app) criteria.
+* Hassle-free updates for the above tools with a single dependency.
 
-**The feature set is intentionally limited**. It doesn’t support advanced features such as server rendering or CSS modules. The tool is also **non-configurable** because it is hard to provide a cohesive experience and easy updates across a set of tools when the user can tweak anything.
-
-**You don’t have to use this.** Historically it has been easy to [gradually adopt](https://www.youtube.com/watch?v=BF58ZJ1ZQxY) NW.js React. However many people create new single-page NW.js React apps from scratch every day. We’ve heard [loud](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4) and [clear](https://twitter.com/thomasfuchs/status/708675139253174273) that this process can be error-prone and tedious, especially if this is your first JavaScript build stack. This project is an attempt to figure out a good way to start developing NW.js React apps.
-
-### Converting to a Custom Setup
-
-**If you’re a power user** and you aren’t happy with the default configuration, you can “eject” from the tool and use it as a boilerplate generator.
-
-Running `npm run eject` copies all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. Commands like `npm start` and `npm run build` will still work, but they will point to the copied scripts so you can tweak them. At this point, you’re on your own.
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Limitations
-
-Some features are currently **not supported**:
-
-* Server rendering.
-* Some experimental syntax extensions (e.g. decorators).
-* CSS Modules (see [#2285](https://github.com/facebookincubator/create-react-app/pull/2285)).
-* Importing LESS or Sass directly ([but you still can use them](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md#adding-a-css-preprocessor-sass-less-etc)).
-* Hot reloading of components.
-
-Some of them might get added in the future if they are stable, are useful to majority of NW.js React apps, don’t conflict with existing tools, and don’t introduce additional configuration.
-
-## What’s Inside?
-
-The tools used by Create NW.js React App are subject to change.
-Currently it is a thin layer on top of many amazing community projects, such as:
-
-* [webpack](https://webpack.js.org/) with [webpack-dev-server](https://github.com/webpack/webpack-dev-server), [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin) and [style-loader](https://github.com/webpack/style-loader)
-* [Babel](http://babeljs.io/) with ES6 and extensions used by Facebook (JSX, [object spread](https://github.com/sebmarkbage/ecmascript-rest-spread/commits/master), [class properties](https://github.com/jeffmo/es-class-public-fields))
-* [Autoprefixer](https://github.com/postcss/autoprefixer)
-* [ESLint](http://eslint.org/)
-* [Jest](http://facebook.github.io/jest)
-* and others.
-
-All of them are transitive dependencies of the provided npm package.
+The tradeoff is that **these tools are preconfigured to work in a specific way**. If your project needs more customization, you can ["eject"](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md#npm-run-eject) and customize it, but then you will need to maintain this configuration.
 
 ## Contributing
 

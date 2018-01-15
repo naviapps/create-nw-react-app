@@ -2,7 +2,7 @@
 
 NW.js React アプリをビルド設定なしで作成します。
 
-* [はじめに](#はじめに) – 新しいアプリを作成する方法
+* [アプリを作成する](#アプリを作成する) – 新しいアプリを作成する方法
 * [ユーザーガイド](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md) – Create NW.js React App で生成されたアプリを開発する方法
 
 Create NW.js React App は macOS、Windows、Linux で動作します。<br>
@@ -13,17 +13,19 @@ Create NW.js React App は macOS、Windows、Linux で動作します。<br>
 ## 概要
 
 ```sh
-npm install -g create-nw-react-app
-
-create-nw-react-app my-app
+npx create-nw-react-app my-app
 cd my-app/
 npm start
 ```
 
+*([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) は npm 5.2 以上に同梱しています、[古いnpmバージョンの手順](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))はこちら*
+
 次にアプリを表示します。<br>
 本番環境にリリースする準備が整ったら、`npm run build` でアプリを作成してください。
 
-<img src='https://raw.githubusercontent.com/naviapps/create-nw-react-app/master/.github/npm_start.png' width='600' alt='npm start'>
+<p align='center'>
+<img src='https://raw.githubusercontent.com/naviapps/create-nw-react-app/master/.github/npm_start.png' width='600' alt=''>
+</p>
 
 ### すぐに始められます
 
@@ -32,7 +34,7 @@ Webpack や Babel のようなツールをインストールまたは設定す�
 
 すぐにプロジェクトを作成するといいでしょう。
 
-## はじめに
+## アプリを作成する
 
 ### インストール
 

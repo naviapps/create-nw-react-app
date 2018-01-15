@@ -1,8 +1,9 @@
 ```text
-https://github.com/facebookincubator/create-react-app/compare/react-scripts@1.0.14...master
-create-nw-react-app                 react-scripts@1.0.17  1,280 commits
+https://github.com/facebookincubator/create-react-app/compare/react-scripts@1.1.0...master
+create-nw-react-app                 react-scripts@1.1.0 1368
   /doc
     /README.ja.md
+    /CONTRIBUTING.ja.md
   /packages
     /create-nw-react-app
       /createNwReactApp.js
@@ -27,7 +28,6 @@ create-nw-react-app                 react-scripts@1.0.17  1,280 commits
         /webpack.config.dev.js
         /webpack.config.prod.js
         /webpackDevServer.config.js
-      /fixtures
       /scripts
         /utils
           /createJestConfig.js
@@ -56,24 +56,15 @@ create-nw-react-app                 react-scripts@1.0.17  1,280 commits
       /README.md
   /tasks
     /cnra.sh
-    /e2e-installs.sh
-    /e2e-kitchensink.sh
-    /e2e-simple.sh
-    /local-test.sh
     /release.sh
     /replace-own-deps.js
   /.eslintignore
   /.eslintrc
   /.gitignore
-  /.travis.yml
-  /CHANGELOG-0.x.md
-  /CHANGELOG.md
   /CONTRIBUTING.md
   /LICENSE
   /PATENTS
   /README.md                        TODO User Guide
-  /appveyor.cleanup-cache.txt
-  /appveyor.yml
   /bootstrap.js
   /lerna.json
   /package.json

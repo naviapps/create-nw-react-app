@@ -46,8 +46,9 @@ module.exports = function(
   // Setup the main rule
   appPackage.main = 'index.html';
 
-  // Setup the build rules
+  // Setup the nw-builder rules
   appPackage.nwBuilder = {
+    '//': 'https://github.com/nwjs-community/nw-builder',
     platforms: ['osx64', 'win32', 'win64'],
     version: 'latest',
     buildDir: './build',
