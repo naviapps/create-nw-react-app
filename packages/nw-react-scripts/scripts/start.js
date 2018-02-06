@@ -92,9 +92,7 @@ choosePort(HOST, DEFAULT_PORT)
       options.flavor = 'sdk';
 
       const currentPlatform = detectCurrentPlatform();
-      if (!options.platforms) {
-        options.platforms = [currentPlatform];
-      }
+      options.platforms = [currentPlatform];
       options.currentPlatform = currentPlatform;
 
       const nw = new NwBuilder(options);
