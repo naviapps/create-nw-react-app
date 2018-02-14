@@ -1,6 +1,6 @@
 ```text
-https://github.com/facebookincubator/create-react-app/compare/react-scripts@1.1.0...master
-create-nw-react-app                 react-scripts@1.1.0 1368
+https://github.com/facebookincubator/create-react-app/compare/react-scripts@1.1.1...master
+create-nw-react-app                 react-scripts@1.1.1 1368
   /doc
     /README.ja.md
     /CONTRIBUTING.ja.md
