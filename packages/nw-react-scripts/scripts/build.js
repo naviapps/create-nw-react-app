@@ -32,11 +32,13 @@ const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const NwBuilder = require('nw-builder');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
+const spawnSync = require('react-dev-utils/crossSpawn').sync;
 const appPackageJson = require(paths.appPackageJson);
 
 const measureFileSizesBeforeBuild =
   FileSizeReporter.measureFileSizesBeforeBuild;
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
+const cyan = chalk.cyan;
 
 // These sizes are pretty large. We'll warn for bundles exceeding them.
 const WARN_AFTER_BUNDLE_GZIP_SIZE = 512 * 1024;
@@ -91,6 +93,17 @@ measureFileSizesBeforeBuild(paths.appBuild)
       console.log();
 
       // Build the app
+      if (fs.existsSync(paths.yarnLockFile)) {
+        console.log(cyan('Running yarn...'));
+        spawnSync('yarnpkg', [], { stdio: 'inherit', cwd: paths.appBuild });
+      } else {
+        console.log(cyan('Running npm install...'));
+        spawnSync('npm', ['install', '--loglevel', 'error'], {
+          stdio: 'inherit',
+          cwd: paths.appBuild,
+        });
+      }
+
       const options = appPackageJson.nwBuilder;
       options.files = `${paths.appBuild}/**/*`;
       options.flavor = 'normal';

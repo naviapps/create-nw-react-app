@@ -17,6 +17,7 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const nodeExternals = require('webpack-node-externals');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 
@@ -290,4 +291,5 @@ module.exports = {
   // Intructs webpack to target a specific environment.
   // https://webpack.js.org/configuration/target/
   target: 'node-webkit',
+  externals: [nodeExternals()],
 };
