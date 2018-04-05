@@ -1,5 +1,7 @@
 {
   "private": true,
+  "name": "create-nw-react-app",
+  "version": "1.0.8",
   "workspaces": [
     "packages/*"
   ],
