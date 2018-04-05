@@ -291,5 +291,9 @@ module.exports = {
   // Intructs webpack to target a specific environment.
   // https://webpack.js.org/configuration/target/
   target: 'node-webkit',
-  externals: [nodeExternals()],
+  externals: [
+    nodeExternals({
+      whitelist: [/^webpack\//],
+    }),
+  ],
 };
