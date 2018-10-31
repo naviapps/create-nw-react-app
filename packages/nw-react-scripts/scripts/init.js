@@ -17,7 +17,63 @@ process.on('unhandledRejection', err => {
 const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
+const execSync = require('child_process').execSync;
 const spawn = require('react-dev-utils/crossSpawn');
+const { defaultBrowsers } = require('react-dev-utils/browsersHelper');
+const os = require('os');
+const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
+
+function isInGitRepository() {
+  try {
+    execSync('git rev-parse --is-inside-work-tree', { stdio: 'ignore' });
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function isInMercurialRepository() {
+  try {
+    execSync('hg --cwd . root', { stdio: 'ignore' });
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function tryGitInit(appPath) {
+  let didInit = false;
+  try {
+    execSync('git --version', { stdio: 'ignore' });
+    if (isInGitRepository() || isInMercurialRepository()) {
+      return false;
+    }
+
+    execSync('git init', { stdio: 'ignore' });
+    didInit = true;
+
+    execSync('git add -A', { stdio: 'ignore' });
+    execSync('git commit -m "Initial commit from Create React App"', {
+      stdio: 'ignore',
+    });
+    return true;
+  } catch (e) {
+    if (didInit) {
+      // If we successfully initialized but couldn't commit,
+      // maybe the commit author config is not set.
+      // In the future, we might supply our own committer
+      // like Ember CLI does, but for now, let's just
+      // remove the Git files to avoid a half-done state.
+      try {
+        // unlinkSync() doesn't work on directories.
+        fs.removeSync(path.join(appPath, '.git'));
+      } catch (removeErr) {
+        // Ignore.
+      }
+    }
+    return false;
+  }
+}
 
 module.exports = function(
   appPath,
@@ -26,27 +82,37 @@ module.exports = function(
   originalDirectory,
   template
 ) {
-  const ownPackageName = require(path.join(__dirname, '..', 'package.json'))
-    .name;
-  const ownPath = path.join(appPath, 'node_modules', ownPackageName);
+  const ownPath = path.dirname(
+    require.resolve(path.join(__dirname, '..', 'package.json'))
+  );
   const appPackage = require(path.join(appPath, 'package.json'));
   const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
 
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
 
+  const useTypeScript = appPackage.dependencies['typescript'] != null;
+
   // Setup the script rules
   appPackage.scripts = {
     start: 'nw-react-scripts start',
     build: 'nw-react-scripts build',
-    test: 'nw-react-scripts test --env=jsdom',
+    test: 'nw-react-scripts test',
     eject: 'nw-react-scripts eject',
   };
 
-  // Setup the main rule
+  // Setup the eslint config
+  appPackage.eslintConfig = {
+    extends: 'nw-react-app',
+  };
+
+  // Setup the browsers list
+  appPackage.browserslist = defaultBrowsers;
+
+  // Setup the main
   appPackage.main = 'index.html';
 
-  // Setup the nw-builder rules
+  // Setup the nw-builder options
   appPackage.nwBuilder = {
     '//': 'https://github.com/nwjs-community/nw-builder',
     platforms: ['osx64', 'win32', 'win64'],
@@ -58,7 +124,7 @@ module.exports = function(
 
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
-    JSON.stringify(appPackage, null, 2)
+    JSON.stringify(appPackage, null, 2) + os.EOL
   );
 
   const readmeExists = fs.existsSync(path.join(appPath, 'README.md'));
@@ -72,7 +138,7 @@ module.exports = function(
   // Copy the files for the user
   const templatePath = template
     ? path.resolve(originalDirectory, template)
-    : path.join(ownPath, 'template');
+    : path.join(ownPath, useTypeScript ? 'template-typescript' : 'template');
   if (fs.existsSync(templatePath)) {
     fs.copySync(templatePath, appPath);
   } else {
@@ -84,23 +150,22 @@ module.exports = function(
 
   // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
   // See: https://github.com/npm/npm/issues/1862
-  fs.move(
-    path.join(appPath, 'gitignore'),
-    path.join(appPath, '.gitignore'),
-    [],
-    err => {
-      if (err) {
-        // Append if there's already a `.gitignore` file there
-        if (err.code === 'EEXIST') {
-          const data = fs.readFileSync(path.join(appPath, 'gitignore'));
-          fs.appendFileSync(path.join(appPath, '.gitignore'), data);
-          fs.unlinkSync(path.join(appPath, 'gitignore'));
-        } else {
-          throw err;
-        }
-      }
+  try {
+    fs.moveSync(
+      path.join(appPath, 'gitignore'),
+      path.join(appPath, '.gitignore'),
+      []
+    );
+  } catch (err) {
+    // Append if there's already a `.gitignore` file there
+    if (err.code === 'EEXIST') {
+      const data = fs.readFileSync(path.join(appPath, 'gitignore'));
+      fs.appendFileSync(path.join(appPath, '.gitignore'), data);
+      fs.unlinkSync(path.join(appPath, 'gitignore'));
+    } else {
+      throw err;
     }
-  );
+  }
 
   let command;
   let args;
@@ -141,6 +206,15 @@ module.exports = function(
       console.error(`\`${command} ${args.join(' ')}\` failed`);
       return;
     }
+  }
+
+  if (useTypeScript) {
+    verifyTypeScriptSetup();
+  }
+
+  if (tryGitInit(appPath)) {
+    console.log();
+    console.log('Initialized a git repository.');
   }
 
   // Display the most elegant way to cd.

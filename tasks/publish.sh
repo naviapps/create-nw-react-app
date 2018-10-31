@@ -26,10 +26,21 @@ set -x
 cd ..
 root_path=$PWD
 
+if [ -z $CI ]; then
+  yarn compile:lockfile
+fi
+
 if [ -n "$(git status --porcelain)" ]; then
   echo "Your git status is not clean. Aborting.";
   exit 1;
 fi
 
+# Get 2FA when not CI
+otp=""
+if [ -z $CI ]; then
+  echo "Please enter npm two-factor auth code: "
+  read otp
+fi
+
 # Go!
-./node_modules/.bin/lerna publish --independent "$@"
+NPM_CONFIG_OTP="$otp" ./node_modules/.bin/lerna publish --independent --npm-client=npm "$@"

@@ -1,0 +1,11 @@
+{
+  "main.js": "http://0.0.0.0:3000/static/js/main.chunk.js",
+  "main.js.map": "http://0.0.0.0:3000/static/js/main.chunk.js.map",
+  "static/js/0.chunk.js": "http://0.0.0.0:3000/static/js/0.chunk.js",
+  "static/js/0.chunk.js.map": "http://0.0.0.0:3000/static/js/0.chunk.js.map",
+  "runtime~main.js": "http://0.0.0.0:3000/static/js/bundle.js",
+  "runtime~main.js.map": "http://0.0.0.0:3000/static/js/bundle.js.map",
+  "static/media/logo.svg": "http://0.0.0.0:3000/static/media/logo.5d5d9eef.svg",
+  "index.html": "http://0.0.0.0:3000/index.html",
+  "../../../build/package.json": "http://0.0.0.0:3000/../../../build/package.json"
+}

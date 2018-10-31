@@ -3,8 +3,8 @@
 This package includes the shareable ESLint configuration used by [Create NW.js React App](https://github.com/naviapps/create-nw-react-app).<br>
 Please refer to its documentation:
 
-* [Getting Started](https://github.com/naviapps/create-nw-react-app/blob/master/README.md#getting-started) – How to create a new app.
-* [User Guide](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md) – How to develop apps bootstrapped with Create NW.js React App.
+- [Getting Started](https://github.com/naviapps/create-nw-react-app/blob/master/README.md#getting-started) – How to create a new app.
+- [User Guide](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md) – How to develop apps bootstrapped with Create NW.js React App.
 
 ## Usage in Create NW.js React App Projects
 
@@ -18,19 +18,19 @@ If you want to use this ESLint configuration in a project not built with Create 
 
 First, install this package, ESLint and the necessary plugins.
 
-  ```sh
-  npm install --save-dev eslint-config-nw-react-app babel-eslint@^7.2.3 eslint@^4.1.1 eslint-plugin-flowtype@^2.34.1 eslint-plugin-import@^2.6.0 eslint-plugin-jsx-a11y@^5.1.1 eslint-plugin-react@^7.1.0
-  ```
+```sh
+npm install --save-dev eslint-config-nw-react-app babel-eslint@9.x eslint@5.x eslint-plugin-flowtype@2.x eslint-plugin-import@2.x eslint-plugin-jsx-a11y@6.x eslint-plugin-react@7.x
+```
 
 Then create a file named `.eslintrc` with following contents in the root folder of your project:
 
-  ```js
-  {
-    "extends": "nw-react-app"
-  }
-  ```
+```js
+{
+"extends": "nw-react-app"
+}
+```
 
-  That's it! You can override the settings from `eslint-config-nw-react-app` by editing the `.eslintrc` file. Learn more about [configuring ESLint](http://eslint.org/docs/user-guide/configuring) on the ESLint website.
+That's it! You can override the settings from `eslint-config-nw-react-app` by editing the `.eslintrc` file. Learn more about [configuring ESLint](http://eslint.org/docs/user-guide/configuring) on the ESLint website.
 
 ## Accessibility Checks
 
@@ -57,11 +57,11 @@ The following rules from the [eslint-plugin-jsx-a11y](https://github.com/evcohen
 
 If you want to enable even more accessibility rules, you can create an `.eslintrc` file in the root of your project with this content:
 
-  ```json
-  {
-    "extends": ["nw-react-app", "plugin:jsx-a11y/recommended"],
-    "plugins": ["jsx-a11y"]
-  }
-  ```
+```json
+{
+  "extends": ["nw-react-app", "plugin:jsx-a11y/recommended"],
+  "plugins": ["jsx-a11y"]
+}
+```
 
 However, if you are using [Create NW.js React App](https://github.com/naviapps/create-nw-react-app) and have not ejected, any additional rules will only be displayed in the [IDE integrations](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md#displaying-lint-output-in-the-editor), but not in the browser or the terminal.
