@@ -117,6 +117,7 @@ module.exports = function(
     '//': 'https://github.com/nwjs-community/nw-builder',
     platforms: ['osx64', 'win32', 'win64'],
     version: 'latest',
+    flavor: 'normal',
     buildDir: './build',
     cacheDir: './cache',
     macIcns: './src/logo.icns',

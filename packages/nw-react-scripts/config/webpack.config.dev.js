@@ -31,14 +31,11 @@ const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
-const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
-const host = process.env.HOST || '0.0.0.0';
-const port = parseInt(process.env.PORT, 10) || 3000;
-const publicPath = `${protocol}://${host}:${port}/`;
+const publicPath = '/';
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
-const publicUrl = `${protocol}://${host}:${port}`;
+const publicUrl = '';
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
 
@@ -105,9 +102,9 @@ module.exports = {
     // Note: instead of the default WebpackDevServer client, we use a custom one
     // to bring better experience for Create NW.js React App users. You can replace
     // the line below with these two lines if you prefer the stock client:
-    require.resolve('webpack-dev-server/client') + `?${publicPath}`,
-    require.resolve('webpack/hot/dev-server'),
-    // require.resolve('react-dev-utils/webpackHotDevClient'),
+    // require.resolve('webpack-dev-server/client') + '?/',
+    // require.resolve('webpack/hot/dev-server'),
+    require.resolve('react-dev-utils/webpackHotDevClient'),
     // Finally, this is your app's code:
     paths.appIndexJs,
     // We include the app code last so that if there is a runtime error during
@@ -115,8 +112,6 @@ module.exports = {
     // changing JS code would still trigger a refresh.
   ],
   output: {
-    // The build folder.
-    path: paths.appBuild,
     // Add /* filename */ comments to generated require()s in the output.
     pathinfo: true,
     // This does not produce a real file. It's just the virtual path that is
@@ -130,6 +125,18 @@ module.exports = {
     // Point sourcemap entries to original disk location (format as URL on Windows)
     devtoolModuleFilenameTemplate: info =>
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
+  },
+  optimization: {
+    // Automatically split vendor and commons
+    // https://twitter.com/wSokra/status/969633336732905474
+    // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
+    splitChunks: {
+      chunks: 'all',
+      name: false,
+    },
+    // Keep the runtime chunk seperated to enable long term caching
+    // https://twitter.com/wSokra/status/969679223278505985
+    runtimeChunk: true,
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.

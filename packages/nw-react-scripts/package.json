@@ -25,7 +25,7 @@
     "template-typescript",
     "utils"
   ],
-  "main": "template/public/index.html",
+  "main": "index.html",
   "bin": {
     "nw-react-scripts": "./bin/nw-react-scripts.js"
   },
@@ -42,7 +42,6 @@
     "bfj": "6.1.1",
     "case-sensitive-paths-webpack-plugin": "2.1.2",
     "chalk": "2.4.1",
-    "copy-webpack-plugin": "^4.5.4",
     "css-loader": "1.0.0",
     "dotenv": "6.0.0",
     "dotenv-expand": "4.2.0",
@@ -88,6 +87,12 @@
   "optionalDependencies": {
     "fsevents": "1.2.4"
   },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "nwBuilder": {
     "platforms": [
       "osx64",
@@ -98,11 +103,5 @@
     "buildDir": "../../build",
     "cacheDir": "../../cache",
     "macIcns": "./template/src/logo.icns"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  }
 }

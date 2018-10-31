@@ -26,8 +26,8 @@ create-nw-react-app
           /fileTransform.js
         /env.js
         /paths.js
-        /webpack.config.dev.js TODO
-        /webpack.config.prod.js TODO
+        /webpack.config.dev.js
+        /webpack.config.prod.js
         /webpackDevServer.config.js
       /lib
         /nw-react-app.d.ts
@@ -55,7 +55,7 @@ create-nw-react-app
           /serviceWorker.ts
         /gitignore
         /index.html
-        /README.md TODO
+        /README.md
       /template
         /public
           /favicon.ico
@@ -70,10 +70,10 @@ create-nw-react-app
           /serviceWorker.js
         /gitignore
         /index.html
-        /README.md TODO
+        /README.md
       /.npmignore
       /LICENSE
-      /package.json TODO
+      /package.json
       /README.md
   /tasks
     /cnra.js
@@ -86,6 +86,6 @@ create-nw-react-app
   /CONTRIBUTING.md
   /LICENSE
   /package.json
-  /README.md TODO
+  /README.md
   /lerna.json
 ```

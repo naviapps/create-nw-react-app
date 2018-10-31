@@ -11,7 +11,7 @@
 // Do this as the first thing so that any code reading it knows the right env.
 process.env.BABEL_ENV = 'development';
 process.env.NODE_ENV = 'development';
-process.env.HOST = 'localhost';
+//process.env.HOST = 'localhost';
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
@@ -32,7 +32,7 @@ const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
 verifyTypeScriptSetup();
 // @remove-on-eject-end
 
-const fs = require('fs');
+const fs = require('fs-extra');
 const chalk = require('chalk');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
@@ -49,6 +49,7 @@ const detectCurrentPlatform = require('nw-builder/lib/detectCurrentPlatform');
 const paths = require('../config/paths');
 const config = require('../config/webpack.config.dev');
 const createDevServerConfig = require('../config/webpackDevServer.config');
+const appPackageJson = require(paths.appPackageJson);
 
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
@@ -84,6 +85,9 @@ if (process.env.HOST) {
 const { checkBrowsers } = require('react-dev-utils/browsersHelper');
 checkBrowsers(paths.appPath, isInteractive)
   .then(() => {
+    // Remove all content but keep the directory so that
+    // if you're in it, you don't end up in Trash
+    fs.emptyDirSync(paths.appBuild);
     // We attempt to use the default port but if it is busy, we offer the user to
     // run on a different port. `choosePort()` Promise resolves to the next free port.
     return choosePort(HOST, DEFAULT_PORT);
@@ -118,8 +122,14 @@ checkBrowsers(paths.appPath, isInteractive)
       console.log(chalk.cyan('Starting the development server...\n'));
 
       // Run the app
-      const options = require(paths.appPackageJson).nwBuilder;
-      options.files = `${paths.appPath}/**/**`;
+      appPackageJson.main = urls.localUrlForBrowser;
+      appPackageJson['node-remote'] = '*://*/*';
+      fs.outputJsonSync(`${paths.appBuild}/package.json`, appPackageJson, {
+        spaces: 2,
+      });
+
+      const options = appPackageJson.nwBuilder;
+      options.files = `${paths.appBuild}/**/**`;
       options.flavor = 'sdk';
 
       const currentPlatform = detectCurrentPlatform();

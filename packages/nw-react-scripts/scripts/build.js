@@ -75,6 +75,8 @@ checkBrowsers(paths.appPath, isInteractive)
     // Remove all content but keep the directory so that
     // if you're in it, you don't end up in Trash
     fs.emptyDirSync(paths.appBuild);
+    // Copy the package.json
+    fs.copySync(paths.appPackageJson, `${paths.appBuild}/package.json`);
     // Merge with the public folder
     copyPublicFolder();
     // Start the webpack build
@@ -112,7 +114,6 @@ checkBrowsers(paths.appPath, isInteractive)
       // Build the app
       const options = require(paths.appPackageJson).nwBuilder;
       options.files = `${paths.appBuild}/**/*`;
-      options.flavor = 'normal';
 
       const nw = new NwBuilder(options);
       nw.build()
