@@ -117,7 +117,7 @@ const cnraScriptPath = path.join(
   'index.js'
 );
 cp.execSync(
-  `node ${cnraScriptPath} --scripts-version="${scriptsPath}" ${args.join(' ')}`,
+  `node ${cnraScriptPath} ${args.join(' ')} --scripts-version="${scriptsPath}"`,
   {
     cwd: rootDir,
     stdio: 'inherit',

@@ -11,7 +11,6 @@
 // Do this as the first thing so that any code reading it knows the right env.
 process.env.BABEL_ENV = 'development';
 process.env.NODE_ENV = 'development';
-//process.env.HOST = 'localhost';
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
@@ -32,8 +31,8 @@ const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
 verifyTypeScriptSetup();
 // @remove-on-eject-end
 
-const fs = require('fs-extra');
-const chalk = require('chalk');
+const fs = require('fs');
+const chalk = require('react-dev-utils/chalk');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const clearConsole = require('react-dev-utils/clearConsole');
@@ -47,7 +46,7 @@ const {
 const NwBuilder = require('nw-builder');
 const detectCurrentPlatform = require('nw-builder/lib/detectCurrentPlatform');
 const paths = require('../config/paths');
-const config = require('../config/webpack.config.dev');
+const configFactory = require('../config/webpack.config');
 const createDevServerConfig = require('../config/webpackDevServer.config');
 const appPackageJson = require(paths.appPackageJson);
 
@@ -75,19 +74,16 @@ if (process.env.HOST) {
     `If this was unintentional, check that you haven't mistakenly set it in your shell.`
   );
   console.log(
-    `Learn more here: ${chalk.yellow('http://bit.ly/CRA-advanced-config')}`
+    `Learn more here: ${chalk.yellow('https://bit.ly/CRA-advanced-config')}`
   );
   console.log();
 }
 
-// We require that you explictly set browsers and do not fall back to
+// We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.
 const { checkBrowsers } = require('react-dev-utils/browsersHelper');
 checkBrowsers(paths.appPath, isInteractive)
   .then(() => {
-    // Remove all content but keep the directory so that
-    // if you're in it, you don't end up in Trash
-    fs.emptyDirSync(paths.appBuild);
     // We attempt to use the default port but if it is busy, we offer the user to
     // run on a different port. `choosePort()` Promise resolves to the next free port.
     return choosePort(HOST, DEFAULT_PORT);
@@ -97,11 +93,25 @@ checkBrowsers(paths.appPath, isInteractive)
       // We have not found a port.
       return;
     }
+    const config = configFactory('development');
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const appName = require(paths.appPackageJson).name;
+    const useTypeScript = fs.existsSync(paths.appTsConfig);
     const urls = prepareUrls(protocol, HOST, port);
+    const devSocket = {
+      warnings: warnings =>
+        devServer.sockWrite(devServer.sockets, 'warnings', warnings),
+      errors: errors =>
+        devServer.sockWrite(devServer.sockets, 'errors', errors),
+    };
     // Create a webpack compiler that is configured with custom messages.
-    const compiler = createCompiler(webpack, config, appName, urls, useYarn);
+    const compiler = createCompiler({
+      appName,
+      urls,
+      useYarn,
+      useTypeScript,
+      webpack,
+    });
     // Load proxy config
     const proxySetting = require(paths.appPackageJson).proxy;
     const proxyConfig = prepareProxy(proxySetting, paths.appPublic);
