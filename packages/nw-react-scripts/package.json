@@ -1,6 +1,6 @@
 {
   "name": "nw-react-scripts",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Configuration and scripts for Create NW.js React App.",
   "keywords": [
     "nw",
@@ -50,7 +50,7 @@
     "dotenv": "6.2.0",
     "dotenv-expand": "4.2.0",
     "eslint": "^6.1.0",
-    "eslint-config-nw-react-app": "^2.0.0",
+    "eslint-config-nw-react-app": "^2.1.0",
     "eslint-loader": "2.2.1",
     "eslint-plugin-flowtype": "3.13.0",
     "eslint-plugin-import": "2.18.2",
