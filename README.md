@@ -8,8 +8,6 @@ Create NW.js React apps with no build configuration.
 Create NW.js React App works on macOS, Windows, and Linux.<br>
 If something doesn’t work, please [file an issue](https://github.com/naviapps/create-nw-react-app/issues/new).
 
-_Language: English / [日本語](https://github.com/naviapps/create-nw-react-app/blob/master/doc/README.ja.md)_
-
 ## Quick Overview
 
 ```sh
@@ -24,7 +22,7 @@ Then open to see your app.<br>
 When you’re ready to release to production, create a minified app with `npm run build`.
 
 <p align='center'>
-<img src='https://raw.githubusercontent.com/naviapps/create-nw-react-app/master/.github/npm_start.png' width='600' alt=''>
+<img src='https://raw.githubusercontent.com/naviapps/create-nw-react-app/master/.github/npm_start.png' width='600' alt='npm start'>
 </p>
 
 ### Get Started Immediately
@@ -36,7 +34,7 @@ Just create a project, and you’re good to go.
 
 ## Creating an App
 
-**You’ll need to have Node 8.9.0 or later on your local development machine** (but it’s not required on the server). You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to easily switch Node versions between different projects.
+**You’ll need to have Node 8.16.0 or Node 10.16.0 or later version on your local development machine** (but it’s not required on the server). You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to easily switch Node versions between different projects.
 
 To create a new app, you may choose one of the following methods:
 
@@ -126,7 +124,7 @@ Your app is ready to be released.
 
 ## User Guide
 
-[Create NW.js React App documentation](https://github.com/naviapps/create-nw-react-app) TODO
+[Create NW.js React App documentation](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md) TODO
 
 You can find detailed instructions on using Create React App and many tips in [its documentation](https://facebook.github.io/create-react-app/).
 
@@ -138,7 +136,7 @@ Please refer to the [User Guide](https://github.com/naviapps/create-nw-react-app
 
 - **One Dependency:** There is just one build dependency. It uses Webpack, Babel, ESLint, and other amazing projects, but provides a cohesive curated experience on top of them.
 
-- **No Configuration Required:** You don't need to configure anything. Reasonably good configuration of both development and production builds is handled for you so you can focus on writing code.
+- **No Configuration Required:** You don't need to configure anything. A reasonably good configuration of both development and production builds is handled for you so you can focus on writing code.
 
 - **No Lock-In:** You can “eject” to a custom setup at any time. Run a single command, and all the configuration and build dependencies will be moved directly into your project, so you can pick up right where you left off.
 
