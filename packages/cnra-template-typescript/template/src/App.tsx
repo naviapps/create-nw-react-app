@@ -1,5 +1,4 @@
 import React from 'react';
-// @ts-ignore
 import logo from './logo.svg';
 import './App.css';
 
@@ -22,6 +21,6 @@ const App: React.FC = () => {
       </header>
     </div>
   );
-};
+}
 
 export default App;

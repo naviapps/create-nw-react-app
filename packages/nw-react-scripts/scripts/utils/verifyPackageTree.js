@@ -1,6 +1,6 @@
 // @remove-file-on-eject
 /**
- * Copyright (c) 2017-present, Navi Apps, Inc.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -81,11 +81,11 @@ function verifyPackageTree() {
             `\nThere might be a problem with the project dependency tree.\n` +
               `It is likely ${chalk.bold(
                 'not'
-              )} a bug in Create NW.js React App, but something you need to fix locally.\n\n`
+              )} a bug in Create React App, but something you need to fix locally.\n\n`
           ) +
             `The ${chalk.bold(
               ownPackageJson.name
-            )} package provided by Create NW.js React App requires a dependency:\n\n` +
+            )} package provided by Create React App requires a dependency:\n\n` +
             chalk.green(
               `  "${chalk.bold(dep)}": "${chalk.bold(expectedVersion)}"\n\n`
             ) +

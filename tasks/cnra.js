@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Copyright (c) 2017-present, Navi Apps, Inc.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -96,7 +96,7 @@ Object.keys(packagePathsByName).forEach(name => {
 console.log('Replaced all local dependencies for testing.');
 console.log('Do not edit any package.json while this task is running.');
 
-// Finally, pack nw-react-scripts.
+// Finally, pack react-scripts.
 // Don't redirect stdio as we want to capture the output that will be returned
 // from execSync(). In this case it will be the .tgz filename.
 const scriptsFileName = cp
@@ -110,14 +110,10 @@ cp.execSync('yarn cache clean');
 
 const args = process.argv.slice(2);
 
-// Now run the CNRA command
-const cnraScriptPath = path.join(
-  packagesDir,
-  'create-nw-react-app',
-  'index.js'
-);
+// Now run the CRA command
+const craScriptPath = path.join(packagesDir, 'create-nw-react-app', 'index.js');
 cp.execSync(
-  `node ${cnraScriptPath} ${args.join(' ')} --scripts-version="${scriptsPath}"`,
+  `node ${craScriptPath} ${args.join(' ')} --scripts-version="${scriptsPath}"`,
   {
     cwd: rootDir,
     stdio: 'inherit',

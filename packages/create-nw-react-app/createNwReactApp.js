@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017-present, Navi Apps, Inc.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -9,21 +9,21 @@
 //   /!\ DO NOT MODIFY THIS FILE /!\
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
-// create-nw-react-app is installed globally on people's computers. This means
+// create-react-app is installed globally on people's computers. This means
 // that it is extremely difficult to have them upgrade the version and
 // because there's only one global version installed, it is very prone to
 // breaking changes.
 //
-// The only job of create-nw-react-app is to init the repository and then
-// forward all the commands to the local version of create-nw-react-app.
+// The only job of create-react-app is to init the repository and then
+// forward all the commands to the local version of create-react-app.
 //
 // If you need to add a new command, please add it to the scripts/ folder.
 //
 // The only reason to modify this file is to add more warnings and
-// troubleshooting information for the `create-nw-react-app` command.
+// troubleshooting information for the `create-react-app` command.
 //
 // Do not make breaking changes! We absolutely don't want to have to
-// tell people to update their global version of create-nw-react-app.
+// tell people to update their global version of create-react-app.
 //
 // Also be careful with new language features.
 // This file must work on Node 6+.
@@ -76,9 +76,17 @@ const program = new commander.Command(packageJson.name)
     '--scripts-version <alternative-package>',
     'use a non-standard version of nw-react-scripts'
   )
+  .option(
+    '--template <path-to-template>',
+    'specify a template for the created project'
+  )
   .option('--use-npm')
   .option('--use-pnp')
-  .option('--typescript')
+  // TODO: Remove this in next major release.
+  .option(
+    '--typescript',
+    '(this option will be removed in favour of templates in the next major release of create-nw-react-app)'
+  )
   .allowUnknownOption()
   .on('--help', () => {
     console.log(`    Only ${chalk.green('<project-directory>')} is required.`);
@@ -110,6 +118,28 @@ const program = new commander.Command(packageJson.name)
     );
     console.log(
       `    It is not needed unless you specifically want to use a fork.`
+    );
+    console.log();
+    console.log(`    A custom ${chalk.cyan('--template')} can be one of:`);
+    console.log(
+      `      - a custom fork published on npm: ${chalk.green(
+        'cnra-template-typescript'
+      )}`
+    );
+    console.log(
+      `      - a local path relative to the current working directory: ${chalk.green(
+        'file:../my-custom-template'
+      )}`
+    );
+    console.log(
+      `      - a .tgz archive: ${chalk.green(
+        'https://mysite.com/my-custom-template-0.8.2.tgz'
+      )}`
+    );
+    console.log(
+      `      - a .tar.gz archive: ${chalk.green(
+        'https://mysite.com/my-custom-template-0.8.2.tar.gz'
+      )}`
     );
     console.log();
     console.log(
@@ -168,33 +198,45 @@ function printValidationResults(results) {
   }
 }
 
-const hiddenProgram = new commander.Command()
-  .option(
-    '--internal-testing-template <path-to-template>',
-    '(internal usage only, DO NOT RELY ON THIS) ' +
-      'use a non-standard application template'
-  )
-  .parse(process.argv);
-
 createApp(
   projectName,
   program.verbose,
   program.scriptsVersion,
+  program.template,
   program.useNpm,
   program.usePnp,
-  program.typescript,
-  hiddenProgram.internalTestingTemplate
+  program.typescript
 );
 
 function createApp(
   name,
   verbose,
   version,
+  template,
   useNpm,
   usePnp,
-  useTypescript,
-  template
+  useTypeScript
 ) {
+  const unsupportedNodeVersion = !semver.satisfies(process.version, '>=8.10.0');
+  if (unsupportedNodeVersion && useTypeScript) {
+    console.error(
+      chalk.red(
+        `You are using Node ${process.version} with the TypeScript template. Node 8.10 or higher is required to use TypeScript.\n`
+      )
+    );
+
+    process.exit(1);
+  } else if (unsupportedNodeVersion) {
+    console.log(
+      chalk.yellow(
+        `You are using Node ${process.version} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
+          `Please update to Node 8.10 or higher for a better, fully supported experience.\n`
+      )
+    );
+    // Fall back to latest supported react-scripts on Node 4
+    process.exit(1);
+  }
+
   const root = path.resolve(name);
   const appName = path.basename(root);
 
@@ -224,17 +266,6 @@ function createApp(
     process.exit(1);
   }
 
-  if (!semver.satisfies(process.version, '>=8.10.0')) {
-    console.log(
-      chalk.yellow(
-        `You are using Node ${process.version} so the project will be bootstrapped with an old unsupported version of tools.\n\n` +
-          `Please update to Node 8.10 or higher for a better, fully supported experience.\n`
-      )
-    );
-    // Fall back to latest supported nw-react-scripts on Node 4
-    process.exit(1);
-  }
-
   if (!useYarn) {
     const npmInfo = checkNpmVersion();
     if (!npmInfo.hasMinNpm) {
@@ -246,7 +277,7 @@ function createApp(
           )
         );
       }
-      // Fall back to latest supported nw-react-scripts for npm 3
+      // Fall back to latest supported react-scripts for npm 3
       process.exit(1);
     }
   } else if (usePnp) {
@@ -262,6 +293,23 @@ function createApp(
       }
       // 1.11 had an issue with webpack-dev-middleware, so better not use PnP with it (never reached stable, but still)
       usePnp = false;
+    }
+  }
+
+  if (useTypeScript) {
+    console.log(
+      chalk.yellow(
+        'The --typescript option has been deprecated and will be removed in a future release.'
+      )
+    );
+    console.log(
+      chalk.yellow(
+        `In future, please use ${chalk.cyan('--template typescript')}.`
+      )
+    );
+    console.log();
+    if (!template) {
+      template = 'typescript';
     }
   }
 
@@ -291,8 +339,7 @@ function createApp(
     originalDirectory,
     template,
     useYarn,
-    usePnp,
-    useTypescript
+    usePnp
   );
 }
 
@@ -375,38 +422,74 @@ function run(
   originalDirectory,
   template,
   useYarn,
-  usePnp,
-  useTypescript
+  usePnp
 ) {
-  getInstallPackage(version, originalDirectory).then(packageToInstall => {
+  Promise.all([
+    getInstallPackage(version, originalDirectory),
+    getTemplateInstallPackage(template, originalDirectory),
+  ]).then(([packageToInstall, templateToInstall]) => {
     const allDependencies = ['react', 'react-dom', packageToInstall];
-    if (useTypescript) {
-      allDependencies.push(
-        // TODO: get user's node version instead of installing latest
-        '@types/node',
-        '@types/react',
-        '@types/react-dom',
-        // TODO: get version of Jest being used instead of installing latest
-        '@types/jest',
-        'typescript'
-      );
-    }
 
     console.log('Installing packages. This might take a couple of minutes.');
-    getPackageName(packageToInstall)
-      .then(packageName =>
+
+    Promise.all([
+      getPackageInfo(packageToInstall),
+      getPackageInfo(templateToInstall),
+    ])
+      .then(([packageInfo, templateInfo]) =>
         checkIfOnline(useYarn).then(isOnline => ({
-          isOnline: isOnline,
-          packageName: packageName,
+          isOnline,
+          packageInfo,
+          templateInfo,
         }))
       )
-      .then(info => {
-        const isOnline = info.isOnline;
-        const packageName = info.packageName;
+      .then(({ isOnline, packageInfo, templateInfo }) => {
+        let packageVersion = semver.coerce(packageInfo.version);
+
+        // This environment variable can be removed post-release.
+        const templatesVersionMinimum = process.env.CNRA_INTERNAL_TEST
+          ? '3.2.0'
+          : '3.3.0';
+
+        // Assume compatibility if we can't test the version.
+        if (!semver.valid(packageVersion)) {
+          packageVersion = templatesVersionMinimum;
+        }
+
+        // Only support templates when used alongside new react-scripts versions.
+        const supportsTemplates = semver.gte(
+          packageVersion,
+          templatesVersionMinimum
+        );
+        if (supportsTemplates) {
+          allDependencies.push(templateToInstall);
+        } else if (template) {
+          console.log('');
+          console.log(
+            `The ${chalk.cyan(packageInfo.name)} version you're using ${
+              packageInfo.name === 'nw-react-scripts' ? 'is not' : 'may not be'
+            } compatible with the ${chalk.cyan('--template')} option.`
+          );
+          console.log('');
+        }
+
+        // TODO: Remove with next major release.
+        if (!supportsTemplates && (template || '').includes('typescript')) {
+          allDependencies.push(
+            '@types/node',
+            '@types/react',
+            '@types/react-dom',
+            '@types/jest',
+            'typescript'
+          );
+        }
+
         console.log(
           `Installing ${chalk.cyan('react')}, ${chalk.cyan(
             'react-dom'
-          )}, and ${chalk.cyan(packageName)}...`
+          )}, and ${chalk.cyan(packageInfo.name)}${
+            supportsTemplates ? ` with ${chalk.cyan(templateInfo.name)}` : ''
+          }...`
         );
         console.log();
 
@@ -417,9 +500,15 @@ function run(
           allDependencies,
           verbose,
           isOnline
-        ).then(() => packageName);
+        ).then(() => ({
+          packageInfo,
+          supportsTemplates,
+          templateInfo,
+        }));
       })
-      .then(async packageName => {
+      .then(async ({ packageInfo, supportsTemplates, templateInfo }) => {
+        const packageName = packageInfo.name;
+        const templateName = supportsTemplates ? templateInfo.name : undefined;
         checkNodeVersion(packageName);
         setCaretRangeForRuntimeDeps(packageName);
 
@@ -432,7 +521,7 @@ function run(
             cwd: process.cwd(),
             args: nodeArgs,
           },
-          [root, appName, verbose, originalDirectory, template],
+          [root, appName, verbose, originalDirectory, templateName],
           `
         var init = require('${packageName}/scripts/init.js');
         init.apply(null, JSON.parse(process.argv[1]));
@@ -517,7 +606,9 @@ function getInstallPackage(version, originalDirectory) {
     {
       name: 'nw-react-scripts-ts',
       message: chalk.yellow(
-        'The nw-react-scripts-ts package is deprecated. TypeScript is now supported natively in Create NW.js React App. You can use the --typescript option instead when generating your app to include TypeScript support. Would you like to continue using nw-react-scripts-ts?'
+        `The nw-react-scripts-ts package is deprecated. TypeScript is now supported natively in Create NW.js React App. You can use the ${chalk.green(
+          '--template typescript'
+        )} option instead when generating your app to include TypeScript support. Would you like to continue using nw-react-scripts-ts?`
       ),
     },
   ];
@@ -542,6 +633,37 @@ function getInstallPackage(version, originalDirectory) {
   }
 
   return Promise.resolve(packageToInstall);
+}
+
+function getTemplateInstallPackage(template, originalDirectory) {
+  let templateToInstall = 'cnra-template';
+  if (template) {
+    if (template.match(/^file:/)) {
+      templateToInstall = `file:${path.resolve(
+        originalDirectory,
+        template.match(/^file:(.*)?$/)[1]
+      )}`;
+    } else if (
+      template.includes('://') ||
+      template.match(/^.+\.(tgz|tar\.gz)$/)
+    ) {
+      // for tar.gz or alternative paths
+      templateToInstall = template;
+    } else {
+      // Add prefix 'cra-template-' to non-prefixed templates, leaving any
+      // @scope/ intact.
+      const packageMatch = template.match(/^(@[^/]+\/)?(.+)$/);
+      const scope = packageMatch[1] || '';
+      const templateName = packageMatch[2];
+
+      const name = templateName.startsWith(templateToInstall)
+        ? templateName
+        : `${templateToInstall}-${templateName}`;
+      templateToInstall = `${scope}${name}`;
+    }
+  }
+
+  return Promise.resolve(templateToInstall);
 }
 
 function getTemporaryDirectory() {
@@ -583,7 +705,7 @@ function extractStream(stream, dest) {
 }
 
 // Extract package name from tarball url or path.
-function getPackageName(installPackage) {
+function getPackageInfo(installPackage) {
   if (installPackage.match(/^.+\.(tgz|tar\.gz)$/)) {
     return getTemporaryDirectory()
       .then(obj => {
@@ -596,12 +718,15 @@ function getPackageName(installPackage) {
         return extractStream(stream, obj.tmpdir).then(() => obj);
       })
       .then(obj => {
-        const packageName = require(path.join(obj.tmpdir, 'package.json')).name;
+        const { name, version } = require(path.join(
+          obj.tmpdir,
+          'package.json'
+        ));
         obj.cleanup();
-        return packageName;
+        return { name, version };
       })
       .catch(err => {
-        // The package name could be with or without semver version, e.g. nw-react-scripts-0.2.0-alpha.1.tgz
+        // The package name could be with or without semver version, e.g. react-scripts-0.2.0-alpha.1.tgz
         // However, this function returns package name only without semver version.
         console.log(
           `Could not extract the package name from the archive: ${err.message}`
@@ -614,27 +739,30 @@ function getPackageName(installPackage) {
             assumedProjectName
           )}"`
         );
-        return Promise.resolve(assumedProjectName);
+        return Promise.resolve({ name: assumedProjectName });
       });
   } else if (installPackage.indexOf('git+') === 0) {
     // Pull package name out of git urls e.g:
-    // git+https://github.com/mycompany/nw-react-scripts.git
-    // git+ssh://github.com/mycompany/nw-react-scripts.git#v1.2.3
-    return Promise.resolve(installPackage.match(/([^/]+)\.git(#.*)?$/)[1]);
+    // git+https://github.com/mycompany/react-scripts.git
+    // git+ssh://github.com/mycompany/react-scripts.git#v1.2.3
+    return Promise.resolve({
+      name: installPackage.match(/([^/]+)\.git(#.*)?$/)[1],
+    });
   } else if (installPackage.match(/.+@/)) {
     // Do not match @scope/ when stripping off @version or @tag
-    return Promise.resolve(
-      installPackage.charAt(0) + installPackage.substr(1).split('@')[0]
-    );
+    return Promise.resolve({
+      name: installPackage.charAt(0) + installPackage.substr(1).split('@')[0],
+      version: installPackage.split('@')[1],
+    });
   } else if (installPackage.match(/^file:/)) {
     const installPackagePath = installPackage.match(/^file:(.*)?$/)[1];
-    const installPackageJson = require(path.join(
+    const { name, version } = require(path.join(
       installPackagePath,
       'package.json'
     ));
-    return Promise.resolve(installPackageJson.name);
+    return Promise.resolve({ name, version });
   }
-  return Promise.resolve(installPackage);
+  return Promise.resolve({ name: installPackage });
 }
 
 function checkNpmVersion() {
@@ -808,7 +936,7 @@ function isSafeToCreateProjectIn(root, name) {
   const conflicts = fs
     .readdirSync(root)
     .filter(file => !validFiles.includes(file))
-    // IntelliJ IDEA creates module files before CNRA is launched
+    // IntelliJ IDEA creates module files before CRA is launched
     .filter(file => !/\.iml$/.test(file))
     // Don't treat log files from previous installation as conflicts
     .filter(

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017-present, Navi Apps, Inc.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -83,7 +83,7 @@ module.exports = {
         'no-undef': 'off',
 
         // Add TypeScript specific rules (and turn off ESLint equivalents)
-        '@typescript-eslint/no-angle-bracket-type-assertion': 'warn',
+        '@typescript-eslint/consistent-type-assertions': 'warn',
         'no-array-constructor': 'off',
         '@typescript-eslint/no-array-constructor': 'warn',
         '@typescript-eslint/no-namespace': 'error',
@@ -95,6 +95,15 @@ module.exports = {
             classes: false,
             variables: false,
             typedefs: false,
+          },
+        ],
+        'no-unused-expressions': 'off',
+        '@typescript-eslint/no-unused-expressions': [
+          'error',
+          {
+            allowShortCircuit: true,
+            allowTernary: true,
+            allowTaggedTemplates: true,
           },
         ],
         'no-unused-vars': 'off',
@@ -184,7 +193,6 @@ module.exports = {
     'no-throw-literal': 'warn',
     'no-undef': 'error',
     'no-restricted-globals': ['error'].concat(restrictedGlobals),
-    'no-unexpected-multiline': 'warn',
     'no-unreachable': 'warn',
     'no-unused-expressions': [
       'error',

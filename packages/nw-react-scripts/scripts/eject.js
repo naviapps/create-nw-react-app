@@ -1,6 +1,6 @@
 // @remove-file-on-eject
 /**
- * Copyright (c) 2017-present, Navi Apps, Inc.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -174,7 +174,7 @@ inquirer
     console.log(cyan('Updating the dependencies'));
     const ownPackageName = ownPackage.name;
     if (appPackage.devDependencies) {
-      // We used to put nw-react-scripts in devDependencies
+      // We used to put react-scripts in devDependencies
       if (appPackage.devDependencies[ownPackageName]) {
         console.log(`  Removing ${cyan(ownPackageName)} from devDependencies`);
         delete appPackage.devDependencies[ownPackageName];
@@ -259,10 +259,10 @@ inquirer
         const ownContent =
           fs.readFileSync(paths.ownTypeDeclarations, 'utf8').trim() + os.EOL;
 
-        // Remove nw-react-scripts reference since they're getting a copy of the types in their project
+        // Remove react-scripts reference since they're getting a copy of the types in their project
         content =
           content
-            // Remove nw-react-scripts types
+            // Remove react-scripts types
             .replace(
               /^\s*\/\/\/\s*<reference\s+types.+?"nw-react-scripts".*\/>.*(?:\n|$)/gm,
               ''
@@ -282,7 +282,7 @@ inquirer
     // "Don't destroy what isn't ours"
     if (ownPath.indexOf(appPath) === 0) {
       try {
-        // remove nw-react-scripts and nw-react-scripts binaries from app node_modules
+        // remove react-scripts and react-scripts binaries from app node_modules
         Object.keys(ownPackage.bin).forEach(binKey => {
           fs.removeSync(path.join(appPath, 'node_modules', '.bin', binKey));
         });
@@ -302,7 +302,7 @@ inquirer
       let windowsCmdFileContent;
       if (process.platform === 'win32') {
         // https://github.com/facebook/create-react-app/pull/3806#issuecomment-357781035
-        // Yarn is diligent about cleaning up after itself, but this causes the nw-react-scripts.cmd file
+        // Yarn is diligent about cleaning up after itself, but this causes the react-scripts.cmd file
         // to be deleted while it is running. This trips Windows up after the eject completes.
         // We'll read the batch file and later "write it back" to match npm behavior.
         try {

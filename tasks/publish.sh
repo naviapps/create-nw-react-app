@@ -1,14 +1,14 @@
 #!/bin/bash
-# Copyright (c) 2017-present, Navi Apps, Inc.
+# Copyright (c) 2015-present, Facebook, Inc.
 #
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
 # ******************************************************************************
-# This releases an update to the `nw-react-scripts` package.
+# This releases an update to the `react-scripts` package.
 # Don't use `npm publish` for it.
 # Read the release instructions:
-# https://github.com/naviapps/create-nw-react-app/blob/master/CONTRIBUTING.md#cutting-a-release
+# https://github.com/facebook/create-react-app/blob/master/CONTRIBUTING.md#cutting-a-release
 # ******************************************************************************
 
 # Start in tasks/ even if run from root directory
@@ -43,4 +43,4 @@ if [ -z $CI ]; then
 fi
 
 # Go!
-NPM_CONFIG_OTP="$otp" ./node_modules/.bin/lerna publish --npm-client=npm "$@"
+NPM_CONFIG_OTP="$otp" ./node_modules/.bin/lerna publish "$@"
