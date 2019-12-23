@@ -1,12 +1,12 @@
 {
   "name": "nw-react-scripts",
-  "version": "2.1.1",
+  "version": "3.3.0",
   "description": "Configuration and scripts for Create NW.js React App.",
   "keywords": [
+    "react",
     "nw",
     "nw.js",
-    "nwjs",
-    "react"
+    "nwjs"
   ],
   "repository": {
     "type": "git",
@@ -49,7 +49,7 @@
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
     "eslint": "^6.6.0",
-    "eslint-config-nw-react-app": "^2.1.0",
+    "eslint-config-nw-react-app": "^5.1.0",
     "eslint-loader": "3.0.2",
     "eslint-plugin-flowtype": "3.13.0",
     "eslint-plugin-import": "2.18.2",

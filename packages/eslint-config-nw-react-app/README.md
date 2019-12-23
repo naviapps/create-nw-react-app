@@ -3,8 +3,8 @@
 This package includes the shareable ESLint configuration used by [Create NW.js React App](https://github.com/naviapps/create-nw-react-app).<br>
 Please refer to its documentation:
 
-- [Getting Started](https://github.com/naviapps/create-nw-react-app/blob/master/README.md#getting-started) – How to create a new app.
-- [User Guide](https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md) – How to develop apps bootstrapped with Create NW.js React App.
+- [Getting Started](https://facebook.github.io/create-react-app/docs/getting-started) – How to create a new app.
+- [User Guide](https://facebook.github.io/create-react-app/) – How to develop apps bootstrapped with Create React App.
 
 ## Usage in Create NW.js React App Projects
 
@@ -19,7 +19,7 @@ If you want to use this ESLint configuration in a project not built with Create 
 First, install this package, ESLint and the necessary plugins.
 
 ```sh
-npm install --save-dev eslint-config-nw-react-app @typescript-eslint/eslint-plugin@1.x @typescript-eslint/parser@1.x babel-eslint@10.x eslint@6.x eslint-plugin-flowtype@3.x eslint-plugin-import@2.x eslint-plugin-jsx-a11y@6.x eslint-plugin-react@7.x eslint-plugin-react-hooks@1.x
+npm install --save-dev eslint-config-nw-react-app @typescript-eslint/eslint-plugin@2.x @typescript-eslint/parser@2.x babel-eslint@10.x eslint@6.x eslint-plugin-flowtype@3.x eslint-plugin-import@2.x eslint-plugin-jsx-a11y@6.x eslint-plugin-react@7.x eslint-plugin-react-hooks@1.x
 ```
 
 Then create a file named `.eslintrc.json` with following contents in the root folder of your project:

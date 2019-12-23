@@ -53,6 +53,6 @@ if (['build', 'eject', 'start', 'test'].includes(script)) {
   console.log('Unknown script "' + script + '".');
   console.log('Perhaps you need to update nw-react-scripts?');
   console.log(
-    'See: https://github.com/naviapps/create-nw-react-app/blob/master/packages/nw-react-scripts/template/README.md#updating-to-new-releases'
+    'See: https://facebook.github.io/create-react-app/docs/updating-to-new-releases'
   );
 }

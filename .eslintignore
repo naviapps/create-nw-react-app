@@ -1,6 +1,6 @@
 node_modules/
-cache
 build
+cache
 my-app*
 packages/nw-react-scripts/template
 packages/nw-react-scripts/fixtures

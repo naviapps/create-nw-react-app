@@ -11,6 +11,7 @@ create-nw-react-app
       /LICENSE
       /package.json
       /README.md
+      /yarn.lock.cached
     /eslint-config-nw-react-app
       /index.js
       /LICENSE
