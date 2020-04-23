@@ -30,7 +30,7 @@ When you’re ready to deploy to production, create a minified bundle with `npm 
 
 ### Get Started Immediately
 
-You **don’t** need to install or configure tools like Webpack or Babel.<br>
+You **don’t** need to install or configure tools like webpack or Babel.<br>
 They are preconfigured and hidden so that you can focus on the code.
 
 Create a project, and you’re good to go.
@@ -135,7 +135,7 @@ Please refer to the [User Guide](https://facebook.github.io/create-react-app/doc
 
 ## Philosophy
 
-- **One Dependency:** There is only one build dependency. It uses Webpack, Babel, ESLint, and other amazing projects, but provides a cohesive curated experience on top of them.
+- **One Dependency:** There is only one build dependency. It uses webpack, Babel, ESLint, and other amazing projects, but provides a cohesive curated experience on top of them.
 
 - **No Configuration Required:** You don't need to configure anything. A reasonably good configuration of both development and production builds is handled for you so you can focus on writing code.
 
