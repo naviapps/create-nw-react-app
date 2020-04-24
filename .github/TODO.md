@@ -1,6 +1,6 @@
 ```text
 Create React App
-https://github.com/facebook/create-react-app/compare/react-scripts@2.1.0...master
+https://github.com/facebook/create-react-app/compare/v3.4.1...master
 
 Create NW.js React App
 create-nw-react-app
