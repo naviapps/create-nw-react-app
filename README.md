@@ -7,7 +7,8 @@ Create NW.js React apps with no build configuration.
 - [User Guide](https://facebook.github.io/create-react-app/) – How to develop apps bootstrapped with Create React App.
 
 Create NW.js React App works on macOS, Windows, and Linux.<br>
-If something doesn’t work, please [file an issue](https://github.com/naviapps/create-nw-react-app/issues/new).
+If something doesn’t work, please [file an issue](https://github.com/naviapps/create-nw-react-app/issues/new).<br>
+If you have questions or need help, please ask in [GitHub Discussions](https://github.com/naviapps/create-nw-react-app/discussions).
 
 ## Quick Overview
 
@@ -37,7 +38,7 @@ Create a project, and you’re good to go.
 
 ## Creating an App
 
-**You’ll need to have Node 8.16.0 or Node 10.16.0 or later version on your local development machine** (but it’s not required on the server). You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to switch Node versions between different projects.
+**You’ll need to have Node 10.16.0 or later version on your local development machine** (but it’s not required on the server). We recommend using the latest LTS version. You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to switch Node versions between different projects.
 
 To create a new app, you may choose one of the following methods:
 
@@ -162,6 +163,17 @@ The tradeoff is that **these tools are preconfigured to work in a specific way**
 ## Contributing
 
 We'd love to have your helping hand on `create-nw-react-app`! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on what we're looking for and how to get started.
+
+## Supporting Create NW.js React App
+
+Create NW.js React App is a community maintained project and all contributors are volunteers. If you'd like to support the future development of Create NW.js React App then please consider donating to our [Open Collective](https://opencollective.com/create-nw-react-app).
+
+## Credits
+
+This project exists thanks to all the people who [contribute](CONTRIBUTING.md).<br>
+<a href="https://github.com/naviapps/create-nw-react-app/graphs/contributors"><img src="https://opencollective.com/create-nw-react-app/contributors.svg?width=890&button=false" /></a>
+
+Thanks to [Netlify](https://www.netlify.com/) for hosting our documentation.
 
 ## License
 
