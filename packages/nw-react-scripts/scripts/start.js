@@ -44,7 +44,7 @@ const {
   prepareUrls,
 } = require('react-dev-utils/WebpackDevServerUtils');
 const NwBuilder = require('nw-builder');
-const detectCurrentPlatform = require('nw-builder/lib/detectCurrentPlatform');
+const detectCurrentPlatform = require('./utils/detectCurrentPlatform');
 const semver = require('semver');
 const paths = require('../config/paths');
 const configFactory = require('../config/webpack.config');
