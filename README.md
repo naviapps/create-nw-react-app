@@ -1,4 +1,4 @@
-# Create NW.js React App [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/naviapps/create-nw-react-app/blob/master/CONTRIBUTING.md)
+# Create NW.js React App [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/naviapps/create-nw-react-app/blob/main/CONTRIBUTING.md)
 
 Create NW.js React apps with no build configuration.
 
@@ -18,11 +18,11 @@ cd my-app
 npm start
 ```
 
-If you've previously installed `create-nw-react-app` globally via `npm install -g create-nw-react-app`, we recommend you uninstall the package using `npm uninstall -g create-nw-react-app` to ensure that npx always uses the latest version.
+If you've previously installed `create-nw-react-app` globally via `npm install -g create-nw-react-app`, we recommend you uninstall the package using `npm uninstall -g create-nw-react-app` or `yarn global remove create-nw-react-app` to ensure that npx always uses the latest version.
 
 _([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))_
 
-Then open to see your app or [http://localhost:3000/](http://localhost:3000/) to view it in the browser.<br>
+Then open [http://localhost:3000/](http://localhost:3000/) to see your app.<br>
 When you’re ready to deploy to production, create a minified bundle with `npm run build`.
 
 <p align='center'>
@@ -38,7 +38,7 @@ Create a project, and you’re good to go.
 
 ## Creating an App
 
-**You’ll need to have Node 10.16.0 or later version on your local development machine** (but it’s not required on the server). We recommend using the latest LTS version. You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to switch Node versions between different projects.
+**You’ll need to have Node 14.0.0 or later version on your local development machine** (but it’s not required on the server). We recommend using the latest LTS version. You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to switch Node versions between different projects.
 
 To create a new app, you may choose one of the following methods:
 
@@ -102,7 +102,7 @@ Inside the newly created project, you can run some built-in commands:
 ### `npm start` or `yarn start`
 
 Runs the app in development mode.<br>
-Open to see your app or [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:3000](http://localhost:3000) to see your app.
 
 The page will automatically reload if you make changes to the code.<br>
 You will see the build errors and lint warnings in the console.

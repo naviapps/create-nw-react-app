@@ -39,14 +39,13 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}',
     ],
     testEnvironment: 'jsdom',
-    testRunner: require.resolve('jest-circus/runner'),
     transform: {
       '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': resolve(
-        'config/jest/babelTransform.js'
+        'react-scripts/config/jest/babelTransform.js'
       ),
-      '^.+\\.css$': resolve('config/jest/cssTransform.js'),
+      '^.+\\.css$': resolve('react-scripts/config/jest/cssTransform.js'),
       '^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)': resolve(
-        'config/jest/fileTransform.js'
+        'react-scripts/config/jest/fileTransform.js'
       ),
     },
     transformIgnorePatterns: [

@@ -1,15 +1,14 @@
-/*
-	detect the current platform according to expected constants
-	return undefined if platform is unrecognized
-*/
 'use strict';
 
+/**
+ * detect the current platform according to expected constants
+ *
+ * return undefined if platform is unrecognized
+ */
 module.exports = function () {
   switch (process.platform) {
     case 'darwin':
-      return process.arch === 'x64' || process.arch === 'arm64'
-        ? 'osx64'
-        : 'osx32';
+      return process.arch === 'x64' ? 'osx64' : 'osx32';
 
     case 'win32':
       return process.arch === 'x64' ||

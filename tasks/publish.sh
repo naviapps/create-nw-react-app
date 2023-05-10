@@ -8,7 +8,7 @@
 # This releases an update to the `react-scripts` package.
 # Don't use `npm publish` for it.
 # Read the release instructions:
-# https://github.com/facebook/create-react-app/blob/master/CONTRIBUTING.md#cutting-a-release
+# https://github.com/facebook/create-react-app/blob/main/CONTRIBUTING.md#cutting-a-release
 # ******************************************************************************
 
 # Start in tasks/ even if run from root directory
@@ -25,10 +25,6 @@ set -x
 # Go to root
 cd ..
 root_path=$PWD
-
-if [ -z $CI ]; then
-  yarn compile:lockfile
-fi
 
 if [ -n "$(git status --porcelain)" ]; then
   echo "Your git status is not clean. Aborting.";
