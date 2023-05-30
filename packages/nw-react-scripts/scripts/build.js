@@ -30,7 +30,7 @@ const configFactory = require('../config/webpack.config');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
-const NwBuilder = require('nw-builder');
+const { NwBuilder } = require('nw-builder-platforms');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
 
@@ -106,8 +106,9 @@ checkBrowsers(paths.appPath, isInteractive)
 
       // Build NW.js applications
       const appPackage = require(paths.appPackageJson);
-      const options = appPackage.nwBuilder;
-      options.files = `${paths.appBuild}/**/*`;
+      const options = appPackage.nwbuilds;
+      options.srcDir = paths.appBuild;
+      options.glob = false;
 
       const nw = new NwBuilder(options);
       nw.build()

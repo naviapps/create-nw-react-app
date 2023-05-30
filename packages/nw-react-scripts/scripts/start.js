@@ -34,7 +34,7 @@ const {
   prepareProxy,
   prepareUrls,
 } = require('react-dev-utils/WebpackDevServerUtils');
-const NwBuilder = require('nw-builder');
+const { NwBuilder } = require('nw-builder-platforms');
 const detectCurrentPlatform = require('./utils/detectCurrentPlatform');
 const semver = require('semver');
 const paths = require('../config/paths');
@@ -145,13 +145,14 @@ checkBrowsers(paths.appPath, isInteractive)
         spaces: 2,
       });
 
-      const options = appPackage.nwBuilder;
-      options.files = `${paths.appBuild}/**/**`;
+      const options = appPackage.nwbuilds;
+      options.mode = 'run';
+      options.srcDir = paths.appBuild;
+      options.glob = false;
       options.flavor = 'sdk';
 
       const currentPlatform = detectCurrentPlatform();
       options.platforms = [currentPlatform];
-      options.currentPlatform = currentPlatform;
 
       const nw = new NwBuilder(options);
       nw.run()

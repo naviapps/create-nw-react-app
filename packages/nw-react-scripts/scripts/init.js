@@ -223,14 +223,17 @@ module.exports = function (
   appPackage.main = 'index.html';
 
   // Setup the nw-builder options
-  appPackage.nwBuilder = {
-    '//': 'https://github.com/nwutils/nw-builder/tree/v3.8.6',
+  appPackage.nwbuilds = {
+    '//': 'https://nwutils.io/nw-builder/',
     platforms: ['osx64', 'win32', 'win64'],
     version: 'latest',
     flavor: 'normal',
-    buildDir: './build',
+    outDir: './out',
     cacheDir: './cache',
-    macIcns: './src/logo.icns',
+    app: {
+      name: appPackage.name,
+      icon: './src/logo.icns',
+    },
   };
 
   fs.writeFileSync(

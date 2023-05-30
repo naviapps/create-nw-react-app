@@ -1,6 +1,6 @@
 {
   "name": "nw-react-scripts",
-  "version": "5.0.3",
+  "version": "5.1.0",
   "description": "Configuration and scripts for Create NW.js React App.",
   "keywords": [
     "react",
@@ -61,7 +61,7 @@
     "jest-resolve": "^27.4.2",
     "jest-watch-typeahead": "^1.0.0",
     "mini-css-extract-plugin": "^2.4.5",
-    "nw-builder": "^3.8.6",
+    "nw-builder-platforms": "^1.0.6",
     "postcss": "^8.4.4",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-loader": "^6.2.1",
@@ -114,15 +114,20 @@
     ]
   },
   "main": "index.html",
-  "nwbuild": {
+  "nwbuilds": {
+    "//": "https://nwutils.io/nw-builder/",
     "platforms": [
       "osx64",
       "win32",
       "win64"
     ],
     "version": "latest",
-    "buildDir": "../../build",
+    "flavor": "normal",
+    "outDir": "../../out",
     "cacheDir": "../../cache",
-    "macIcns": "../cnra-template/src/logo.icns"
+    "app": {
+      "name": "nw-react-scripts",
+      "icon": ",../cnra-template/src/logo.icns"
+    }
   }
 }
