@@ -146,7 +146,6 @@ checkBrowsers(paths.appPath, isInteractive)
       });
 
       const options = appPackage.nwbuilds;
-      options.mode = 'run';
       options.srcDir = paths.appBuild;
       options.glob = false;
       options.flavor = 'sdk';
