@@ -1,3 +1,8 @@
+I don't currently have time to maintain it.
+I'm looking for someone to take over.
+
+---
+
 # Create NW.js React App [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/naviapps/create-nw-react-app/blob/main/CONTRIBUTING.md)
 
 Create NW.js React apps with no build configuration.
